@@ -1,0 +1,13 @@
+Windows Registry Editor Version 5.00
+
+[HKEY_CURRENT_USER\SOFTWARE\Microsoft\Internet Explorer\PageSetup]
+"header"="angular-csharp - Dokumentation"
+"footer"="&d&bPage &p of &P"
+"font"="font-family: Segoe UI; font-size: 10pt; color: rgb(0,0,0);"
+"margin_top"="0.590550"
+"margin_bottom"="0.590550"
+"margin_left"="0.393700"
+"margin_right"="0.393700"
+"Print_Background"="no"
+"Shrink_To_Fit"="yes"
+
