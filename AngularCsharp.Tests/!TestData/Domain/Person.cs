@@ -1,4 +1,4 @@
-﻿namespace AngularCsharp.Tests._TestData.Domain
+namespace AngularCsharp.Tests._TestData.Domain
 {
     public class Person
     {
