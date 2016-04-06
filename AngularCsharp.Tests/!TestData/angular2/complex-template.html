@@ -1,0 +1,29 @@
+﻿<div style="height: 100px; width: 1px;"></div>
+<p></p>
+<p *ngIf="customer">Hallo {{customer.salutation}},<br>TEST</p>
+<br>
+<p *ngIf="customer">Hallo {{customer.Salutation}},</p>
+<p *ngIf="!customer">Sehr geehrter Kunde,</p>
+
+<p>blah blah blah... </p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Nummer</th>
+            <th>Titel</th>
+            <th>Status</th>
+            <th>Details</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="#item of items">
+            <td>{{item.number}}</td>
+            <td>{{item.title}}</td>
+            <td>{{item.status}}</td>
+            <td>
+                <table><tbody><tr><td>Das ist ein innere Tabelle</td></tr></tbody></table>
+            </td>
+        </tr>
+    </tbody>
+</table>
