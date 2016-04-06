@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using AngularCsharp.Tests._TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -53,6 +52,9 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { });
+            
+            // Log
+            Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(template, result);
@@ -68,6 +70,9 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { });
+            
+            // Log
+            Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(template, result);
@@ -89,6 +94,9 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { firstName });
+            
+            // Log
+            Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
@@ -107,6 +115,9 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { firstName, lastName });
+            
+            // Log
+            Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
@@ -126,7 +137,10 @@ namespace AngularCsharp.Tests
 
             // Act
             //string result = sut.Convert(new { person });
-            string result = sut.Convert2(new { person, resultShould, calls });
+            string result = sut.Convert(new { person, resultShould, calls });
+            
+            // Log
+            Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
@@ -134,22 +148,5 @@ namespace AngularCsharp.Tests
         }
 
         #endregion
-
-        [TestMethod]
-        public void Dumper1()
-        {
-            Person value = new Person();
-            value.FirstName = "Harry";
-            value.LastName = "Pfleger";
-            value.Email = new Email() { EmailAddress = "harry@ardiemdia.com" };
-
-            using (var writer = new StringWriter())
-            {
-                AngularCsharpService.Dump(value, "test", writer);
-
-                Console.WriteLine(writer);
-            }
-
-        }
     }
 }
