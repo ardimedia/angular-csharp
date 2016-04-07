@@ -1,10 +1,6 @@
-﻿using AngularCsharp.Helpers;
+﻿using System.Linq;
+using AngularCsharp.Helpers;
 using HtmlAgilityPack;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AngularCsharp
 {
@@ -14,15 +10,16 @@ namespace AngularCsharp
 
         private HtmlDocument htmlDocument;
 
-        private TemplateEngine engine;
+        private TemplateEngine templateEngine;
 
         #endregion
 
         #region Properties
 
+        // TODO: 2016-04-07/hp: Redesign, should probably provide a Logger to the templateEngine, not access it in this way.
         public Logger Logger
         {
-            get { return this.engine.Dependencies.Logger; }
+            get { return this.templateEngine.Dependencies.Logger; }
         }
 
         #endregion
@@ -31,13 +28,22 @@ namespace AngularCsharp
 
         public AngularService(string template)
         {
-            // Parse HTML
+            // Initialize engine
+            this.templateEngine = new TemplateEngine();
+
+            // Parse Html
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(template);
             this.htmlDocument = htmlDocument;
 
-            // Load engine
-            this.engine = new TemplateEngine();
+            // Handle parse errors
+            if (htmlDocument.ParseErrors.Count() > 0)
+            {
+                foreach (var parseError in htmlDocument.ParseErrors)
+                {
+                    this.Logger.AddWarning($"ParseError: Line [{parseError.Line}] Code [{parseError.Code}] Reason [{parseError.Reason}]");
+                }
+            }
         }
 
         #endregion
@@ -46,7 +52,7 @@ namespace AngularCsharp
 
         public string Render(object model)
         {
-            return this.engine.ProcessTemplate(htmlDocument, model);
+            return this.templateEngine.ProcessTemplate(this.htmlDocument, model);
         }
 
         #endregion

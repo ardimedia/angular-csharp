@@ -64,7 +64,7 @@
     <Compile Include="AngularServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="!TestData\angular2\complex-template-final.html">
+    <Content Include="!TestData\angular2\complex-template.result.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="!TestData\angular2\complex-template.html">
