@@ -65,14 +65,14 @@ namespace AngularCsharp
 
                     // Don't call multiple processors, cancel as soon one processor returns nodes
                     break;
-                }   
+                }
             }
 
             // Append nodes to target node
             foreach (HtmlNode node in nodes)
             {
                 targetNode.AppendChild(node);
-            }            
+            }
 
             // Process childs
             foreach (HtmlNode childNode in context.CurrentNode.ChildNodes)

@@ -52,7 +52,7 @@
     <Compile Include="Processors\SimpleCopyProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="TemplateEngine.cs" />
-    <Compile Include="ValueFinder.cs" />
+    <Compile Include="Values\ValueFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

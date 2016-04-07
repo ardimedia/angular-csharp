@@ -54,6 +54,7 @@
   <ItemGroup>
     <Compile Include="!TestData\Domain\Email.cs" />
     <Compile Include="!TestData\Domain\Person.cs" />
+    <Compile Include="Values\ValueFinderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AngularCsharpServiceTest.cs" />
     <Compile Include="AngularServiceTest.cs" />
