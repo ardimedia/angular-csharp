@@ -46,13 +46,16 @@
   <ItemGroup>
     <Compile Include="AngularCsharpService.cs" />
     <Compile Include="AngularService.cs" />
-    <Compile Include="NodeContext.cs" />
+    <Compile Include="Exceptions\ValueNotFoundException.cs" />
+    <Compile Include="Helpers\Logger.cs" />
+    <Compile Include="Processors\ExpressionsProcessor.cs" />
+    <Compile Include="ValueObjects\NodeContext.cs" />
     <Compile Include="Processors\IProcessor.cs" />
     <Compile Include="Processors\ProcessResults.cs" />
     <Compile Include="Processors\SimpleCopyProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="TemplateEngine.cs" />
-    <Compile Include="Values\ValueFinder.cs" />
+    <Compile Include="Helpers\TemplateEngine.cs" />
+    <Compile Include="Helpers\ValueFinder.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

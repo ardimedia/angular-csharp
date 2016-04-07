@@ -1,9 +1,11 @@
-﻿using System;
+﻿using AngularCsharp.Exceptions;
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Reflection;
 
-namespace AngularCsharp.Values
+namespace AngularCsharp.Helpers
 {
     /// <summary>
     /// Finds an value in the variables dictionary based on Angular expression syntax,
@@ -13,7 +15,7 @@ namespace AngularCsharp.Values
     {
         #region Public Methods
 
-        public string GetString(string key, Dictionary<string, object> lookup)
+        public string GetString(string key, ReadOnlyDictionary<string, object> lookup)
         {
             // TODO: Verify key (must not be empty)
             // TODO: Verify lookup (must not be empty)
@@ -23,7 +25,7 @@ namespace AngularCsharp.Values
             return result.ToString();
         }
 
-        public IEnumerable GetList(string key, Dictionary<string, object> lookup)
+        public IEnumerable GetList(string key, ReadOnlyDictionary<string, object> lookup)
         {
             var list = GetObject(key, lookup);
             if (!(list is IEnumerable))
@@ -41,27 +43,48 @@ namespace AngularCsharp.Values
 
         #region Private Methods
 
-        private object GetObject(string key, Dictionary<string, object> lookup)
+        private object GetObject(string key, ReadOnlyDictionary<string, object> lookup)
         {
-            string[] keySplitted = key.Split('.');
+            object model = lookup;
 
-            foreach (var item in lookup)
+            foreach (string keyPart in key.Split('.'))
             {
-                if (item.Key == keySplitted[0])
-                {
-                    return item.Value.GetType().GetProperty(keySplitted[1]).GetValue(item.Value).ToString();
-
-                    //PropertyInfo[] propertyInfos = item.GetType().GetProperties();
-
-                    //foreach (var propertyInfo in propertyInfos)
-                    //{
-                    //    ProcessProperty(propertyInfo.Name, "", propertyInfo.GetValue(item));
-                    //}
-                }
+                model = FindProperty(model, keyPart);
             }
 
             // TODO: Return exception, since key could not by found
-            return null;
+            return model;
+        }
+
+        private object FindProperty(object container, string key)
+        {
+            if (container is IDictionary)
+            {
+                return GetItemFromDictionary((IDictionary)container, key);
+            }
+
+            return GetPropertyValueByReflection(container, key);
+        }
+
+        private object GetItemFromDictionary(IDictionary dictionary, string key)
+        {
+            if (!dictionary.Contains(key))
+            {
+                throw new ValueNotFoundException();
+            }
+
+            return dictionary[key];
+        }
+
+        private object GetPropertyValueByReflection(object model, string key)
+        {
+            var property = model.GetType().GetProperty(key);
+            if (property == null)
+            {
+                throw new ValueNotFoundException();
+            }
+
+            return property.GetValue(model);
         }
 
         private void ProcessProperty(string name, string parentName, object value)

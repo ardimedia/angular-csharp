@@ -1,4 +1,5 @@
 ﻿using AngularCsharp.Processors;
+using AngularCsharp.ValueObjects;
 using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
@@ -8,13 +9,18 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AngularCsharp
+namespace AngularCsharp.Helpers
 {
-    public class TemplateEngine
+    internal class TemplateEngine
     {
-        #region Fields
+        #region Properties
 
-        private IProcessor[] _Processors;
+        public Logger Logger { get; set; }
+
+        public IProcessor[] Processors { get; set; }
+
+
+        public ValueFinder ValueFinder { get; set; }
 
         #endregion
 
@@ -22,28 +28,30 @@ namespace AngularCsharp
 
         public TemplateEngine()
         {
-            _Processors = GetProcessors();
+            this.Logger = new Logger();
+            this.Processors = GetDefaultProcessors();
+            this.ValueFinder = new ValueFinder();
         }
 
         #endregion
 
         #region Public methods
 
-        public string ProcessTemplate(HtmlDocument document, object model)
+        internal string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
         {
             // Process template
             var variables = GetGlobalVariables(model);
-            var finalDocument = new HtmlDocument();
+            var htmlDocumentOutput = new HtmlDocument();
 
-            foreach (HtmlNode childNode in document.DocumentNode.ChildNodes)
+            foreach (HtmlNode childNode in htmlDocumentInput.DocumentNode.ChildNodes)
             {
-                var context = new NodeContext(variables, childNode, finalDocument);
-                ProcessNode(context, finalDocument.DocumentNode);
+                var context = new NodeContext(variables, childNode, htmlDocumentOutput, ValueFinder, Logger);
+                ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
             // Return html
             var writer = new StringWriter();
-            finalDocument.Save(writer);
+            htmlDocumentOutput.Save(writer);
             return writer.ToString();
         }
 
@@ -55,7 +63,7 @@ namespace AngularCsharp
         {
             // Process current node
             HtmlNode[] nodes = null;
-            foreach (IProcessor processor in GetProcessors())
+            foreach (IProcessor processor in GetDefaultProcessors())
             {
                 var results = processor.ProcessNode(context);
 
@@ -85,11 +93,11 @@ namespace AngularCsharp
             }
         }
 
-        private IProcessor[] GetProcessors()
+        private IProcessor[] GetDefaultProcessors()
         {
             return new IProcessor[]
             {
-                new SimpleCopyProcessor()
+                new ExpressionsProcessor()
             };
         }
 

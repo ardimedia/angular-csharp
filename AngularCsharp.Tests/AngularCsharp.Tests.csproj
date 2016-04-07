@@ -56,11 +56,15 @@
     <Compile Include="!TestData\Domain\Person.cs" />
     <Compile Include="Values\ValueFinderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="AngularCsharpServiceTest.cs" />
     <Compile Include="AngularServiceTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="!TestData\angular2\complex-template.html" />
+    <Content Include="!TestData\angular2\complex-template-final.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="!TestData\angular2\complex-template.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="!TestData\angular2\simple1.html" />
   </ItemGroup>
   <ItemGroup>

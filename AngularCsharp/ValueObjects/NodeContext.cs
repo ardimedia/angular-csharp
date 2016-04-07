@@ -1,12 +1,10 @@
-﻿using HtmlAgilityPack;
-using System;
+﻿using AngularCsharp.Helpers;
+using HtmlAgilityPack;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace AngularCsharp
+namespace AngularCsharp.ValueObjects
 {
     public class NodeContext
     {
@@ -14,19 +12,28 @@ namespace AngularCsharp
 
         public ReadOnlyDictionary<string, object> CurrentVariables { get; private set; }
 
-        public HtmlNode CurrentNode { get; set; }
+        public HtmlNode CurrentNode { get; private set; }
 
+        /// <summary>
+        /// TODO brauchts das?
+        /// </summary>
         public HtmlDocument TargetDocument { get; private set; }
+
+        public ValueFinder ValueFinder { get; private set; }
+
+        public Logger Logger { get; private set; }
 
         #endregion
 
         #region Constructor
 
-        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument)
+        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, ValueFinder valueFinder, Logger logger)
         {
             CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
             CurrentNode = node;
             TargetDocument = targetDocument;
+            ValueFinder = valueFinder;
+            Logger = logger;
         }
 
         #endregion
@@ -45,11 +52,11 @@ namespace AngularCsharp
         public NodeContext ChangeContext(Dictionary<string, object> additionalVariables, HtmlNode node)
         {
             // Make a copy of current dictionary
-            var dictionary = CurrentVariables.ToDictionary(entry => entry.Key, entry => entry.Value);
-            
+            var dictionary = this.CurrentVariables.ToDictionary(entry => entry.Key, entry => entry.Value);
+
             // Add additional variables
             if (additionalVariables != null)
-            { 
+            {
                 foreach (KeyValuePair<string, object> item in additionalVariables)
                 {
                     if (dictionary.ContainsKey(item.Key))
@@ -63,7 +70,7 @@ namespace AngularCsharp
             }
 
             // Return new NodeContext instance
-            return new NodeContext(dictionary, node, TargetDocument);
+            return new NodeContext(dictionary, node, TargetDocument, ValueFinder, this.Logger);
         }
 
         #endregion

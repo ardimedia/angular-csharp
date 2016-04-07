@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using AngularCsharp.Helpers;
+using HtmlAgilityPack;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,9 +12,9 @@ namespace AngularCsharp
     {
         #region Fields
 
-        private HtmlDocument _DomTree;
+        public HtmlDocument htmlDocument;
 
-        private TemplateEngine _Engine;
+        private TemplateEngine engine;
 
         #endregion
 
@@ -22,12 +23,12 @@ namespace AngularCsharp
         public AngularService(string template)
         {
             // Parse HTML
-            var doc = new HtmlDocument();
-            doc.LoadHtml(template);
-            _DomTree = doc;
+            var htmlDocument = new HtmlDocument();
+            htmlDocument.LoadHtml(template);
+            this.htmlDocument = htmlDocument;
 
             // Load engine
-            _Engine = new TemplateEngine();
+            this.engine = new TemplateEngine();
         }
 
         #endregion
@@ -36,7 +37,12 @@ namespace AngularCsharp
 
         public string Render(object model)
         {
-            return _Engine.ProcessTemplate(_DomTree, model);
+            return this.engine.ProcessTemplate(htmlDocument, model);
+        }
+
+        public Logger GetLogger()
+        {
+            return this.engine.Logger;
         }
 
         #endregion

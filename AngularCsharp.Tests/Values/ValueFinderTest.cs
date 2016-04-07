@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using AngularCsharp.Tests._TestData.Domain;
-using AngularCsharp.Values;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AngularCsharp.Helpers;
 
 namespace AngularCsharp.Tests.Values
 {
@@ -21,7 +21,7 @@ namespace AngularCsharp.Tests.Values
             lookup.Add("person", person);
 
             // Act
-            var result = sut.GetString(key, lookup);
+            var result = sut.GetString(key, new System.Collections.ObjectModel.ReadOnlyDictionary<string, object>(lookup));
 
             // Assert
             Assert.AreEqual<string>(person.FirstName, result);

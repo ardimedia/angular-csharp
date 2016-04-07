@@ -1,10 +1,10 @@
 ﻿<div style="height: 100px; width: 1px;"></div>
-<p></p>
+<p>
 <div></div>
-<p *ngIf="customer">Hallo {{customer.salutation}},<br>TEST</p>
+<p *ngif="customer">Hallo Hallo Herbert!,<br>TEST</p>
 <br>
-<p *ngIf="customer">Hallo {{customer.salutation}},</p>
-<p *ngIf="!customer">Sehr geehrter Kunde,</p>
+<p *ngif="customer">Hallo Hallo Herbert!,</p>
+<p *ngif="!customer">Sehr geehrter Kunde,</p>
 
 <p>blah blah blah... </p>
 
@@ -18,7 +18,7 @@
         </tr>
     </thead>
     <tbody>
-        <tr *ngFor="#item of items">
+        <tr *ngfor="#item of items">
             <td>{{item.number}}</td>
             <td>{{item.title}}</td>
             <td>{{item.status}}</td>
