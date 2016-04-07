@@ -13,10 +13,6 @@ namespace AngularCsharp.Helpers
 
         private ValueFinder valueFinder;
 
-        public ExpressionResolver()
-        {
-        }
-
         #endregion
 
         #region Constructors

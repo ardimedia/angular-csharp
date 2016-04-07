@@ -38,7 +38,7 @@ namespace AngularCsharp.Helpers
             // Return object array with found item
             return new Object[1] { list };
         }
-        public object GetObject(string key, IDictionary<string, object> lookup)
+        public virtual object GetObject(string key, IDictionary<string, object> lookup)
         {
             object model = lookup;
 

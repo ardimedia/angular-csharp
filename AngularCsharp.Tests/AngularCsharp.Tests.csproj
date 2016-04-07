@@ -35,6 +35,10 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Moq, Version=4.2.1510.2205, Culture=neutral, PublicKeyToken=69f491c39445e920, processorArchitecture=MSIL">
+      <HintPath>..\packages\Moq.4.2.1510.2205\lib\net40\Moq.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <Choose>
@@ -54,6 +58,7 @@
   <ItemGroup>
     <Compile Include="!TestData\Domain\Email.cs" />
     <Compile Include="!TestData\Domain\Person.cs" />
+    <Compile Include="Helpers\ExpressionResolverTest.cs" />
     <Compile Include="Values\ValueFinderTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AngularServiceTest.cs" />
@@ -72,6 +77,9 @@
       <Project>{07543c3b-00db-459d-ad96-d2695673c020}</Project>
       <Name>AngularCsharp</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
