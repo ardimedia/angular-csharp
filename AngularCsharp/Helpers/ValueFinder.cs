@@ -15,7 +15,7 @@ namespace AngularCsharp.Helpers
     {
         #region Public Methods
 
-        public string GetString(string key, ReadOnlyDictionary<string, object> lookup)
+        public string GetString(string key, IDictionary<string, object> lookup)
         {
             // TODO: Verify key (must not be empty)
             // TODO: Verify lookup (must not be empty)
@@ -25,7 +25,7 @@ namespace AngularCsharp.Helpers
             return result.ToString();
         }
 
-        public IEnumerable GetList(string key, ReadOnlyDictionary<string, object> lookup)
+        public IEnumerable GetList(string key, IDictionary<string, object> lookup)
         {
             var list = GetObject(key, lookup);
             if (!(list is IEnumerable))
@@ -38,12 +38,7 @@ namespace AngularCsharp.Helpers
             // Return object array with found item
             return new Object[1] { list };
         }
-
-        #endregion
-
-        #region Private Methods
-
-        private object GetObject(string key, ReadOnlyDictionary<string, object> lookup)
+        public object GetObject(string key, IDictionary<string, object> lookup)
         {
             object model = lookup;
 
@@ -56,8 +51,17 @@ namespace AngularCsharp.Helpers
             return model;
         }
 
+        #endregion
+
+        #region Private Methods
+
         private object FindProperty(object container, string key)
         {
+            if (container == null)
+            {
+                throw new ValueNotFoundException();
+            }
+
             if (container is IDictionary)
             {
                 return GetItemFromDictionary((IDictionary)container, key);

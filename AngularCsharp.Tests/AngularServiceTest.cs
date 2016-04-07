@@ -20,7 +20,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.IsNotNull(sut);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         #endregion
@@ -36,7 +36,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.IsNotNull(sut);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         #endregion
@@ -58,7 +58,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.AreEqual<string>(template, result);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         [TestMethod]
@@ -76,7 +76,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.AreEqual<string>(template, result);
-            Assert.AreEqual(1, sut.GetLogger().AllWarnings.Length);
+            Assert.AreEqual(1, sut.Logger.AllWarnings.Length);
         }
 
         #endregion
@@ -97,7 +97,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         [TestMethod]
@@ -118,7 +118,7 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         [TestMethod]
@@ -140,10 +140,58 @@ namespace AngularCsharp.Tests
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
-            Assert.IsFalse(sut.GetLogger().HasWarnings);
+            Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
         #endregion
+
+        [TestMethod]
+        public void AngularService_IfProcessor_True()
+        {
+            // Assign
+            var template = "<p *ngif=\"customer\">{{customer.salutation}}</p><hr>";
+            var sut = new AngularService(template);
+            var model = new { customer = new { salutation = "Hallo Herbert!" }, items = new[] { new { number = "0001", title = "Test", status = "offen" } } };
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual("<p>" + model.customer.salutation + "</p><hr>", result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_IfProcessor_False()
+        {
+            // Assign
+            var template = "<p *ngif=\"customer\">{{customer.salutation}}</p><hr>";
+            var sut = new AngularService(template);
+            var model = new { customer = (object)null, items = new[] { new { number = "0001", title = "Test", status = "offen" } } };
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual("<hr>", result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_IfProcessor_Not()
+        {
+            // Assign
+            var template = "<p *ngif=\"!customer\">Hallo!</p><hr>";
+            var sut = new AngularService(template);
+            var model = new { customer = (object)null, items = new[] { new { number = "0001", title = "Test", status = "offen" } } };
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual("<p>Hallo!</p><hr>", result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
 
         [TestMethod]
         public void AngularService_ComplexTemplate()

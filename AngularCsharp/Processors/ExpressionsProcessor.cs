@@ -10,7 +10,7 @@ using AngularCsharp.Exceptions;
 
 namespace AngularCsharp.Processors
 {
-    class ExpressionsProcessor : IProcessor
+    public class ExpressionsProcessor : IProcessor
     {
         #region Constants
 
@@ -35,7 +35,7 @@ namespace AngularCsharp.Processors
                 newNode = nodeContext.TargetDocument.CreateTextNode(ReplaceFields(nodeContext));
             }
 
-            return new ProcessResults() { OutputNodes = new HtmlNode[] { newNode } };
+            return new ProcessResults() { OutputNodes = new HtmlNode[] { newNode }};
         }
 
         #endregion
@@ -55,7 +55,7 @@ namespace AngularCsharp.Processors
                     input = input.Replace(match.Value, fieldValue);
                 } catch (ValueNotFoundException ex)
                 {
-                    nodeContext.Logger.AddWarning(String.Format("Value {0} not found", match.Groups[1].Value));
+                    nodeContext.Dependencies.Logger.AddWarning(String.Format("Value {0} not found", match.Groups[1].Value));
                 }
             }
 

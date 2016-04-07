@@ -19,21 +19,18 @@ namespace AngularCsharp.ValueObjects
         /// </summary>
         public HtmlDocument TargetDocument { get; private set; }
 
-        public ValueFinder ValueFinder { get; private set; }
-
-        public Logger Logger { get; private set; }
+        public Dependencies Dependencies { get; private set; }
 
         #endregion
 
         #region Constructor
 
-        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, ValueFinder valueFinder, Logger logger)
+        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, Dependencies dependencies)
         {
             CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
             CurrentNode = node;
             TargetDocument = targetDocument;
-            ValueFinder = valueFinder;
-            Logger = logger;
+            Dependencies = dependencies;
         }
 
         #endregion
@@ -70,7 +67,7 @@ namespace AngularCsharp.ValueObjects
             }
 
             // Return new NodeContext instance
-            return new NodeContext(dictionary, node, TargetDocument, ValueFinder, this.Logger);
+            return new NodeContext(dictionary, node, TargetDocument, Dependencies);
         }
 
         #endregion

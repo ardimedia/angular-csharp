@@ -15,12 +15,9 @@ namespace AngularCsharp.Helpers
     {
         #region Properties
 
-        public Logger Logger { get; set; }
+        public Dependencies Dependencies { get; private set; }
 
         public IProcessor[] Processors { get; set; }
-
-
-        public ValueFinder ValueFinder { get; set; }
 
         #endregion
 
@@ -28,9 +25,8 @@ namespace AngularCsharp.Helpers
 
         public TemplateEngine()
         {
-            this.Logger = new Logger();
+            this.Dependencies = new Dependencies();
             this.Processors = GetDefaultProcessors();
-            this.ValueFinder = new ValueFinder();
         }
 
         #endregion
@@ -45,7 +41,7 @@ namespace AngularCsharp.Helpers
 
             foreach (HtmlNode childNode in htmlDocumentInput.DocumentNode.ChildNodes)
             {
-                var context = new NodeContext(variables, childNode, htmlDocumentOutput, ValueFinder, Logger);
+                var context = new NodeContext(variables, childNode, htmlDocumentOutput, Dependencies);
                 ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
@@ -62,34 +58,38 @@ namespace AngularCsharp.Helpers
         private void ProcessNode(NodeContext context, HtmlNode targetNode)
         {
             // Process current node
-            HtmlNode[] nodes = null;
+            var results = new ProcessResults();
             foreach (IProcessor processor in GetDefaultProcessors())
             {
-                var results = processor.ProcessNode(context);
+                results = processor.ProcessNode(context);
 
-                if (results.OutputNodes.Length > 0)
+                if (results.OutputNodes != null)
                 {
-                    nodes = results.OutputNodes;
-
                     // Don't call multiple processors, cancel as soon one processor returns nodes
                     break;
                 }
             }
 
             // Append nodes to target node
-            foreach (HtmlNode node in nodes)
+            if (results.OutputNodes != null)
             {
-                targetNode.AppendChild(node);
+                foreach (HtmlNode node in results.OutputNodes)
+                {
+                    targetNode.AppendChild(node);
+                }
             }
 
             // Process childs
-            foreach (HtmlNode childNode in context.CurrentNode.ChildNodes)
+            if (!results.SkipChildNodes)
             {
-                // Change context
-                var childContext = context.ChangeContext(childNode);
+                foreach (HtmlNode childNode in context.CurrentNode.ChildNodes)
+                {
+                    // Change context
+                    var childContext = context.ChangeContext(childNode);
 
-                // Process child node
-                ProcessNode(childContext, targetNode.LastChild);
+                    // Process child node
+                    ProcessNode(childContext, targetNode.LastChild);
+                }
             }
         }
 
@@ -97,6 +97,7 @@ namespace AngularCsharp.Helpers
         {
             return new IProcessor[]
             {
+                new IfProcessor(),
                 new ExpressionsProcessor()
             };
         }

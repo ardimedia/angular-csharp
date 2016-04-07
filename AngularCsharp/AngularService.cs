@@ -12,9 +12,18 @@ namespace AngularCsharp
     {
         #region Fields
 
-        public HtmlDocument htmlDocument;
+        private HtmlDocument htmlDocument;
 
         private TemplateEngine engine;
+
+        #endregion
+
+        #region Properties
+
+        public Logger Logger
+        {
+            get { return this.engine.Dependencies.Logger; }
+        }
 
         #endregion
 
@@ -38,11 +47,6 @@ namespace AngularCsharp
         public string Render(object model)
         {
             return this.engine.ProcessTemplate(htmlDocument, model);
-        }
-
-        public Logger GetLogger()
-        {
-            return this.engine.Logger;
         }
 
         #endregion
