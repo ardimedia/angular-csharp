@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
-VisualStudioVersion = 14.0.24720.0
+VisualStudioVersion = 14.0.25123.0
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{40F240D5-45D3-44E4-A34D-6A5DABA27B0B}"
 	ProjectSection(SolutionItems) = preProject
@@ -15,6 +15,12 @@ EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCsharp", "AngularCsharp\AngularCsharp.csproj", "{07543C3B-00DB-459D-AD96-D2695673C020}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCsharp.Tests", "AngularCsharp.Tests\AngularCsharp.Tests.csproj", "{C980033F-A97E-4839-86E2-6B37ADE40A7C}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-Documentation", "9-Documentation", "{1BD47EAE-C1F1-4AD9-945A-BB4F91429DBD}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCsharp.Documentation", "AngularCsharp.Documentation\AngularCsharp.Documentation.csproj", "{74D47051-5EE0-4277-BAA7-589691B18F11}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "1-Sources", "1-Sources", "{854D507C-6FE8-4857-9A2C-2C2D20390143}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -30,8 +36,17 @@ Global
 		{C980033F-A97E-4839-86E2-6B37ADE40A7C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C980033F-A97E-4839-86E2-6B37ADE40A7C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C980033F-A97E-4839-86E2-6B37ADE40A7C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74D47051-5EE0-4277-BAA7-589691B18F11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74D47051-5EE0-4277-BAA7-589691B18F11}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74D47051-5EE0-4277-BAA7-589691B18F11}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74D47051-5EE0-4277-BAA7-589691B18F11}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{07543C3B-00DB-459D-AD96-D2695673C020} = {854D507C-6FE8-4857-9A2C-2C2D20390143}
+		{C980033F-A97E-4839-86E2-6B37ADE40A7C} = {854D507C-6FE8-4857-9A2C-2C2D20390143}
+		{74D47051-5EE0-4277-BAA7-589691B18F11} = {1BD47EAE-C1F1-4AD9-945A-BB4F91429DBD}
 	EndGlobalSection
 EndGlobal
