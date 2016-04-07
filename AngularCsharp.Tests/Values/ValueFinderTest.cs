@@ -15,16 +15,19 @@ namespace AngularCsharp.Tests.Values
         {
             // Assign
             var sut = new ValueFinder();
-            var key = "person.FirstName";
-            var person = new Person() { FirstName = "Jim", LastName = "Blue" };
-            var lookup = new Dictionary<string, object>();
-            lookup.Add("person", person);
+            var order = new { number = "1000", customer = new { number = "20000", name = new { firstName = "Jim", lastName = "Blue" } } };
+            var dictionary = new Dictionary<string, object>() { { "number", order.number }, { "customer", order.customer } };
+            var lookup = new System.Collections.ObjectModel.ReadOnlyDictionary<string, object>(dictionary);
 
             // Act
-            var result = sut.GetString(key, new System.Collections.ObjectModel.ReadOnlyDictionary<string, object>(lookup));
+            var result1 = sut.GetString("number", lookup);
+            var result2 = sut.GetString("customer.number", lookup);
+            var result3 = sut.GetString("customer.name.firstName", lookup);
 
             // Assert
-            Assert.AreEqual<string>(person.FirstName, result);
+            Assert.AreEqual(order.number, result1);
+            Assert.AreEqual(order.customer.number, result2);
+            Assert.AreEqual(order.customer.name.firstName, result3);
         }
 
         #endregion
