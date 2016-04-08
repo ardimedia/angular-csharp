@@ -2,8 +2,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
-using System.Reflection;
 
 namespace AngularCsharp.Helpers
 {
@@ -15,20 +13,20 @@ namespace AngularCsharp.Helpers
     {
         #region Public Methods
 
-        public string GetString(string key, IDictionary<string, object> lookup)
+        public virtual string GetString(string key, IDictionary<string, object> lookup)
         {
             // TODO: Verify key (must not be empty)
             // TODO: Verify lookup (must not be empty)
 
-            var result = GetObject(key, lookup);
+            object result = GetObject(key, lookup);
 
             return result.ToString();
         }
 
-        public IEnumerable GetList(string key, IDictionary<string, object> lookup)
+        public virtual IEnumerable GetList(string key, IDictionary<string, object> lookup)
         {
             var list = GetObject(key, lookup);
-            if (!(list is IEnumerable))
+            if (list is IEnumerable)
             {
                 return (IEnumerable) list;
             }

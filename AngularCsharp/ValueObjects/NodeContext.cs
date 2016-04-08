@@ -21,16 +21,19 @@ namespace AngularCsharp.ValueObjects
 
         public Dependencies Dependencies { get; private set; }
 
+        public TemplateEngine TemplateEngine { get; private set; }
+
         #endregion
 
         #region Constructor
 
-        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, Dependencies dependencies)
+        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, Dependencies dependencies, TemplateEngine templateEngine)
         {
-            CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
-            CurrentNode = node;
-            TargetDocument = targetDocument;
-            Dependencies = dependencies;
+            this.CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
+            this.CurrentNode = node;
+            this.TargetDocument = targetDocument;
+            this.Dependencies = dependencies;
+            this.TemplateEngine = templateEngine;
         }
 
         #endregion
@@ -67,7 +70,7 @@ namespace AngularCsharp.ValueObjects
             }
 
             // Return new NodeContext instance
-            return new NodeContext(dictionary, node, TargetDocument, Dependencies);
+            return new NodeContext(dictionary, node, this.TargetDocument, this.Dependencies, this.TemplateEngine);
         }
 
         #endregion

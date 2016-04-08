@@ -50,6 +50,7 @@
     <Compile Include="Helpers\ExpressionResolver.cs" />
     <Compile Include="Helpers\Logger.cs" />
     <Compile Include="Processors\ExpressionsProcessor.cs" />
+    <Compile Include="Processors\ForProcessor.cs" />
     <Compile Include="Processors\IfProcessor.cs" />
     <Compile Include="ValueObjects\Dependencies.cs" />
     <Compile Include="ValueObjects\NodeContext.cs" />

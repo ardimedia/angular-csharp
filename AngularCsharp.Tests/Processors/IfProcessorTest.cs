@@ -1,14 +1,9 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AngularCsharp.Processors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using HtmlAgilityPack;
+﻿using AngularCsharp.Helpers;
 using AngularCsharp.ValueObjects;
-using AngularCsharp.Helpers;
+using HtmlAgilityPack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
+using System.Collections.Generic;
 
 namespace AngularCsharp.Processors.Tests.Processors
 {
@@ -101,7 +96,7 @@ namespace AngularCsharp.Processors.Tests.Processors
                 dependencies.ExpressionResolver = expressionResolver;
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), dependencies);
+            return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
         }
     }
 }

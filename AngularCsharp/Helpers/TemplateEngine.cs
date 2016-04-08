@@ -1,17 +1,13 @@
 ﻿using AngularCsharp.Processors;
 using AngularCsharp.ValueObjects;
 using HtmlAgilityPack;
-using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AngularCsharp.Helpers
 {
-    internal class TemplateEngine
+    public class TemplateEngine
     {
         #region Properties
 
@@ -33,7 +29,7 @@ namespace AngularCsharp.Helpers
 
         #region Public methods
 
-        internal string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
+        public string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
         {
             // Process template
             var variables = GetGlobalVariables(model);
@@ -41,7 +37,7 @@ namespace AngularCsharp.Helpers
 
             foreach (HtmlNode childNode in htmlDocumentInput.DocumentNode.ChildNodes)
             {
-                var context = new NodeContext(variables, childNode, htmlDocumentOutput, Dependencies);
+                var context = new NodeContext(variables, childNode, htmlDocumentOutput, this.Dependencies, this);
                 ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
@@ -55,7 +51,7 @@ namespace AngularCsharp.Helpers
 
         #region Private methods
 
-        private void ProcessNode(NodeContext context, HtmlNode targetNode)
+        public virtual void ProcessNode(NodeContext context, HtmlNode targetNode)
         {
             // Process current node
             var results = new ProcessResults();
@@ -98,6 +94,7 @@ namespace AngularCsharp.Helpers
             return new IProcessor[]
             {
                 new IfProcessor(),
+                new ForProcessor(),
                 new ExpressionsProcessor()
             };
         }

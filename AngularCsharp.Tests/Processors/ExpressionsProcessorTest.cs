@@ -1,12 +1,8 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AngularCsharp.Processors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using AngularCsharp.Helpers;
 using AngularCsharp.ValueObjects;
 using HtmlAgilityPack;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
+using System.Collections.Generic;
 
 namespace AngularCsharp.Processors.Tests.Processors
 {
@@ -101,7 +97,7 @@ namespace AngularCsharp.Processors.Tests.Processors
                 variables = new Dictionary<string, object>();
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), new Dependencies());
+            return new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
         }
     }
 }

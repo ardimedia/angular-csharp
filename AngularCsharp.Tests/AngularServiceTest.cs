@@ -289,7 +289,10 @@ namespace AngularCsharp.Tests
         {
             // Assign
             var template = System.IO.File.ReadAllText(@"!TestData\complex-template.html");
-            var model = new { customer = new { salutation = "Hallo Herbert!" }, items = new[] { new { number = "0001", title = "Test", status = "offen" } } };
+            var model = new { customer = new { salutation = "Hallo Herbert!" }, items = new[] {
+                new { number = "001", title = "TEST 1", status = "done" },
+                new { number = "002", title = "TEST 2", status = "new" }
+            } };
             string expected = System.IO.File.ReadAllText(@"!TestData\complex-template.result.html");
             var sut = new AngularService(template);
 

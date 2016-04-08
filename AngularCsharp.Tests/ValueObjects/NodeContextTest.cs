@@ -1,4 +1,5 @@
-﻿using HtmlAgilityPack;
+﻿using AngularCsharp.Helpers;
+using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System.Collections.Generic;
 
@@ -11,13 +12,14 @@ namespace AngularCsharp.ValueObjects.Tests.ValueObjects
         public void ValueObjects_NodeContext_Constructor()
         {
             // Assign
-            var variables = new Dictionary<string, object>() { { "name", "value" } };
-            var node = (new HtmlDocument()).CreateElement("div");
-            var targetDocument = new HtmlDocument();
-            var dependencies = new Dependencies();
+            Dictionary <string, object> variables = new Dictionary<string, object>() { { "name", "value" } };
+            HtmlNode node = (new HtmlDocument()).CreateElement("div");
+            HtmlDocument targetDocument = new HtmlDocument();
+            Dependencies dependencies = new Dependencies();
+            TemplateEngine templateEngine = new TemplateEngine();
 
             // Act
-            var sut = new NodeContext(variables, node, targetDocument, dependencies);
+            var sut = new NodeContext(variables, node, targetDocument, dependencies, templateEngine);
 
             // Assert
             Assert.AreEqual(variables.Count, sut.CurrentVariables.Count, "Variables dictionary is not equal");
@@ -31,12 +33,10 @@ namespace AngularCsharp.ValueObjects.Tests.ValueObjects
         public void ValueObjects_NodeContext_Constructor_ChangeContext_Shorthand()
         {
             // Assign
-            var variables = new Dictionary<string, object>();
-            var node = (new HtmlDocument()).CreateElement("div");
-            var targetDocument = new HtmlDocument();
-            var dependencies = new Dependencies();
-            var newNode = (new HtmlDocument()).CreateElement("p");
-            var sut = new NodeContext(variables, node, targetDocument, dependencies);
+            Dictionary<string, object> variables = new Dictionary<string, object>();
+            HtmlNode node = (new HtmlDocument()).CreateElement("div");
+            HtmlNode newNode = (new HtmlDocument()).CreateElement("p");
+            NodeContext sut = new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
 
             // Act
             var changedSut = sut.ChangeContext(newNode);
@@ -53,10 +53,8 @@ namespace AngularCsharp.ValueObjects.Tests.ValueObjects
             // Assign
             var variables = new Dictionary<string, object>() { { "name", "test" }, { "old", "hello" } };
             var node = (new HtmlDocument()).CreateElement("div");
-            var targetDocument = new HtmlDocument();
-            var dependencies = new Dependencies();
             var newNode = (new HtmlDocument()).CreateElement("p");
-            var sut = new NodeContext(variables, node, targetDocument, dependencies);
+            var sut = new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
             var additionalVariables = new Dictionary<string, object>() { { "name", "value" }, { "new", "test" } };
 
             // Act
