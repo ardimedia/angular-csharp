@@ -65,6 +65,7 @@
     <Compile Include="Helpers\ExpressionResolverTest.cs" />
     <Compile Include="Helpers\LoggerTest.cs" />
     <Compile Include="Helpers\ValueFinderTest.cs" />
+    <Compile Include="Processors\ExpressionsProcessorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AngularServiceTest.cs" />
     <Compile Include="ValueObjects\DependenciesTest.cs" />
