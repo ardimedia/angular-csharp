@@ -3,7 +3,7 @@ using AngularCsharp.Tests._TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AngularCsharp.Helpers;
 
-namespace AngularCsharp.Tests.Values
+namespace AngularCsharp.Tests.Helpers
 {
     [TestClass]
     public class ValueFinderTest

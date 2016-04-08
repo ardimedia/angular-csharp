@@ -19,7 +19,7 @@ namespace AngularCsharp.Helpers.Tests.Helpers
 
             // Assert
             Assert.IsFalse(sut.HasWarnings);
-            Assert.AreEqual(0, sut.AllWarnings.Length);
+            Assert.AreEqual(0, sut.Warnings.Length);
         }
 
         [TestMethod]
@@ -33,8 +33,8 @@ namespace AngularCsharp.Helpers.Tests.Helpers
             sut.AddWarning(message);
 
             // Assert
-            Assert.AreEqual(1, sut.AllWarnings.Length);
-            Assert.AreEqual(message, sut.AllWarnings[0]);
+            Assert.AreEqual(1, sut.Warnings.Length);
+            Assert.AreEqual(message, sut.Warnings[0]);
             Assert.IsTrue(sut.HasWarnings);
         }
     }
