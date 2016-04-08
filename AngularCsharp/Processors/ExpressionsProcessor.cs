@@ -18,12 +18,6 @@ namespace AngularCsharp.Processors
 
         #endregion
 
-        #region Fields
-
-        private ValueFinder valueFinder = new ValueFinder();
-
-        #endregion
-
         #region IProcessor methods
 
         public ProcessResults ProcessNode(NodeContext nodeContext)
@@ -51,7 +45,7 @@ namespace AngularCsharp.Processors
             {
                 try
                 {
-                    var fieldValue = valueFinder.GetString(match.Groups[1].Value, nodeContext.CurrentVariables);
+                    var fieldValue = nodeContext.Dependencies.ValueFinder.GetString(match.Groups[1].Value, nodeContext.CurrentVariables);
                     input = input.Replace(match.Value, fieldValue);
                 } catch (ValueNotFoundException ex)
                 {
