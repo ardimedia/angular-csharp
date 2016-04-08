@@ -26,7 +26,7 @@ namespace AngularCsharp.Helpers
 
         #region Methods
 
-        public bool IsTrue(string expression, IDictionary<string, object> variables)
+        public virtual bool IsTrue(string expression, IDictionary<string, object> variables)
         {
             if (expression.Substring(0, 1) == "!")
             {
