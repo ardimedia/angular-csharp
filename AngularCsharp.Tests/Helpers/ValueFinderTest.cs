@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
-using AngularCsharp.Tests._TestData.Domain;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AngularCsharp.Helpers;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AngularCsharp.Tests.Helpers
 {

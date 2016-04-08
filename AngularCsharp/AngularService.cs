@@ -31,7 +31,7 @@ namespace AngularCsharp
             // Initialize engine
             this.templateEngine = new TemplateEngine();
 
-            // Parse Html
+            // Parse HTML
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(template);
             this.htmlDocument = htmlDocument;

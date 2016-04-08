@@ -1,7 +1,7 @@
 ﻿using System;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
-using AngularCsharp.Tests._TestData.Domain;
 using System.Linq;
+using AngularCsharp.Tests._TestData.Domain;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AngularCsharp.Tests
 {

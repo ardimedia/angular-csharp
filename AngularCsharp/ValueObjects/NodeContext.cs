@@ -1,8 +1,8 @@
-﻿using AngularCsharp.Helpers;
-using HtmlAgilityPack;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using AngularCsharp.Helpers;
+using HtmlAgilityPack;
 
 namespace AngularCsharp.ValueObjects
 {

@@ -1,13 +1,10 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
+using AngularCsharp.Exceptions;
 using AngularCsharp.ValueObjects;
 using HtmlAgilityPack;
-using System.Collections;
-using AngularCsharp.Exceptions;
 
 namespace AngularCsharp.Processors
 {
@@ -57,7 +54,7 @@ namespace AngularCsharp.Processors
             {
                 return nodeContext.Dependencies.ValueFinder.GetList(variableName, nodeContext.CurrentVariables);
             }
-            catch (ValueNotFoundException ex)
+            catch (ValueNotFoundException)
             {
                 nodeContext.Dependencies.Logger.AddWarning($"Value { variableName } not found");
                 return new Object[0];

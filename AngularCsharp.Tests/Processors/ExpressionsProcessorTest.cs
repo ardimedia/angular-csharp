@@ -1,8 +1,8 @@
-﻿using AngularCsharp.Helpers;
+﻿using System.Collections.Generic;
+using AngularCsharp.Helpers;
 using AngularCsharp.ValueObjects;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace AngularCsharp.Processors.Tests.Processors
 {

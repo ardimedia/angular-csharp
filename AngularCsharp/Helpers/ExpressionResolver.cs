@@ -1,9 +1,6 @@
-﻿using AngularCsharp.Exceptions;
-using System;
+﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using AngularCsharp.Exceptions;
 
 namespace AngularCsharp.Helpers
 {
@@ -38,7 +35,7 @@ namespace AngularCsharp.Helpers
             try
             {
                 value = this.valueFinder.GetObject(expression, variables);
-            } catch (ValueNotFoundException ex)
+            } catch (ValueNotFoundException)
             {
                 // TODO: Log warning
             }

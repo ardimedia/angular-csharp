@@ -1,7 +1,7 @@
-﻿using AngularCsharp.Helpers;
+﻿using System.Collections.Generic;
+using AngularCsharp.Helpers;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using System.Collections.Generic;
 
 namespace AngularCsharp.ValueObjects.Tests.ValueObjects
 {

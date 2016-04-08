@@ -1,12 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Text.RegularExpressions;
-using System.Threading.Tasks;
-using AngularCsharp.ValueObjects;
-using AngularCsharp.Helpers;
-using HtmlAgilityPack;
 using AngularCsharp.Exceptions;
+using AngularCsharp.ValueObjects;
+using HtmlAgilityPack;
 
 namespace AngularCsharp.Processors
 {
@@ -47,7 +43,7 @@ namespace AngularCsharp.Processors
                 {
                     var fieldValue = nodeContext.Dependencies.ValueFinder.GetString(match.Groups[1].Value, nodeContext.CurrentVariables);
                     input = input.Replace(match.Value, fieldValue);
-                } catch (ValueNotFoundException ex)
+                } catch (ValueNotFoundException)
                 {
                     nodeContext.Dependencies.Logger.AddWarning(String.Format("Value {0} not found", match.Groups[1].Value));
                 }

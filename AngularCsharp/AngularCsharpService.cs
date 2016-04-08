@@ -23,7 +23,7 @@ namespace AngularCsharp
 
         public string Template { get; private set; }
 
-        public Dictionary<string, string> Values;
+        public Dictionary<string, string> Values { get; set; }
 
         public List<string> Errors { get; private set; }
 

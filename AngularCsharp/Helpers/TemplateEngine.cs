@@ -1,9 +1,9 @@
-﻿using AngularCsharp.Processors;
-using AngularCsharp.ValueObjects;
-using HtmlAgilityPack;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
+using AngularCsharp.Processors;
+using AngularCsharp.ValueObjects;
+using HtmlAgilityPack;
 
 namespace AngularCsharp.Helpers
 {
@@ -41,7 +41,7 @@ namespace AngularCsharp.Helpers
                 ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
-            // Return html
+            // Return HTML
             var writer = new StringWriter();
             htmlDocumentOutput.Save(writer);
             return writer.ToString();

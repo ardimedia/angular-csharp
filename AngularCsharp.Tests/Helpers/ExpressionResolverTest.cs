@@ -1,9 +1,8 @@
-﻿using System;
+﻿using System.Collections.Generic;
+using AngularCsharp.Exceptions;
+using AngularCsharp.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
-using AngularCsharp.Helpers;
-using AngularCsharp.Exceptions;
-using System.Collections.Generic;
 
 namespace AngularCsharp.Tests.Helpers
 {
