@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
-using AngularCsharp.Tests._TestData.Domain;
+using AngularCSharp.Tests._TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AngularCsharp.Tests
+namespace AngularCSharp.Tests
 {
     [TestClass]
     public class AngularServiceTest

@@ -4,13 +4,13 @@ using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
 
-namespace AngularCsharp
+namespace AngularCSharp
 {
-    public class AngularCsharpService
+    public class AngularCSharpService
     {
         #region Constructors
 
-        public AngularCsharpService(string template)
+        public AngularCSharpService(string template)
         {
             this.Template = template;
             this.Values = new Dictionary<string, string>();

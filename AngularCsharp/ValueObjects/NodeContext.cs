@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using AngularCsharp.Helpers;
+using AngularCSharp.Helpers;
 using HtmlAgilityPack;
 
-namespace AngularCsharp.ValueObjects
+namespace AngularCSharp.ValueObjects
 {
     public class NodeContext
     {

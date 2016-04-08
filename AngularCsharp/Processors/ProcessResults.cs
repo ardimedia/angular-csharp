@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace AngularCsharp.Processors
+namespace AngularCSharp.Processors
 {
     public class ProcessResults
     {

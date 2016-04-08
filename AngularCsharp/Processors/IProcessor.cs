@@ -1,6 +1,6 @@
-﻿using AngularCsharp.ValueObjects;
+﻿using AngularCSharp.ValueObjects;
 
-namespace AngularCsharp.Processors
+namespace AngularCSharp.Processors
 {
     public interface IProcessor
     {

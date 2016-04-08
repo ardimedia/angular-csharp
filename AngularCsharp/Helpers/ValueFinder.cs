@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using AngularCsharp.Exceptions;
+using AngularCSharp.Exceptions;
 
-namespace AngularCsharp.Helpers
+namespace AngularCSharp.Helpers
 {
     /// <summary>
     /// Finds an value in the variables dictionary based on Angular expression syntax,

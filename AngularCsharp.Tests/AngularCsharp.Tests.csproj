@@ -6,8 +6,8 @@
     <ProjectGuid>{C980033F-A97E-4839-86E2-6B37ADE40A7C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AngularCsharp.Tests</RootNamespace>
-    <AssemblyName>AngularCsharp.Tests</AssemblyName>
+    <RootNamespace>AngularCSharp.Tests</RootNamespace>
+    <AssemblyName>AngularCSharp.Tests</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
@@ -83,9 +83,9 @@
     <Content Include="!TestData\angular2\simple1.html" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\AngularCsharp\AngularCsharp.csproj">
+    <ProjectReference Include="..\AngularCsharp\AngularCSharp.csproj">
       <Project>{07543c3b-00db-459d-ad96-d2695673c020}</Project>
-      <Name>AngularCsharp</Name>
+      <Name>AngularCSharp</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

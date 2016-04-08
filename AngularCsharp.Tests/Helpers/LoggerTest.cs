@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AngularCsharp.Helpers.Tests.Helpers
+namespace AngularCSharp.Helpers.Tests.Helpers
 {
     [TestClass]
     public class LoggerTests

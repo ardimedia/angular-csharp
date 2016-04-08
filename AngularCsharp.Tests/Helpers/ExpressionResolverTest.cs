@@ -1,10 +1,10 @@
 ﻿using System.Collections.Generic;
-using AngularCsharp.Exceptions;
-using AngularCsharp.Helpers;
+using AngularCSharp.Exceptions;
+using AngularCSharp.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace AngularCsharp.Tests.Helpers
+namespace AngularCSharp.Tests.Helpers
 {
     [TestClass]
     public class ExpressionResolverTest

@@ -1,11 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.IO;
 using System.Reflection;
-using AngularCsharp.Processors;
-using AngularCsharp.ValueObjects;
+using AngularCSharp.Processors;
+using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
 
-namespace AngularCsharp.Helpers
+namespace AngularCSharp.Helpers
 {
     public class TemplateEngine
     {

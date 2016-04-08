@@ -2,11 +2,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
-using AngularCsharp.Exceptions;
-using AngularCsharp.ValueObjects;
+using AngularCSharp.Exceptions;
+using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
 
-namespace AngularCsharp.Processors
+namespace AngularCSharp.Processors
 {
     public class ForProcessor : IProcessor
     {

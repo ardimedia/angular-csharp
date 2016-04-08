@@ -1,6 +1,6 @@
 ﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AngularCsharp.ValueObjects.Tests.ValueObjects
+namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 {
     [TestClass()]
     public class DependenciesTest

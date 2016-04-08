@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("AngularCsharp.Tests")]
+[assembly: AssemblyTitle("AngularCSharp.Tests")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("Ardimedia, Schaan - Liechtenstein")]
-[assembly: AssemblyProduct("AngularCsharp.Tests")]
+[assembly: AssemblyCompany("Ardimedia")]
+[assembly: AssemblyProduct("AngularCSharp.Tests")]
 [assembly: AssemblyCopyright("Copyright © 2016 Ardimedia")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]

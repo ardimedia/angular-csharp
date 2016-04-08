@@ -12,9 +12,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		WE-Markdown.PrinterSetup.reg = WE-Markdown.PrinterSetup.reg
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCsharp", "AngularCsharp\AngularCsharp.csproj", "{07543C3B-00DB-459D-AD96-D2695673C020}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCSharp", "AngularCsharp\AngularCSharp.csproj", "{07543C3B-00DB-459D-AD96-D2695673C020}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCsharp.Tests", "AngularCsharp.Tests\AngularCsharp.Tests.csproj", "{C980033F-A97E-4839-86E2-6B37ADE40A7C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AngularCSharp.Tests", "AngularCsharp.Tests\AngularCSharp.Tests.csproj", "{C980033F-A97E-4839-86E2-6B37ADE40A7C}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "9-Documentation", "9-Documentation", "{1BD47EAE-C1F1-4AD9-945A-BB4F91429DBD}"
 EndProject

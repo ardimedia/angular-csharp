@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using AngularCsharp.Exceptions;
+using AngularCSharp.Exceptions;
 
-namespace AngularCsharp.Helpers
+namespace AngularCSharp.Helpers
 {
     public class ExpressionResolver
     {

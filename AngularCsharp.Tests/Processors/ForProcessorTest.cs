@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using AngularCsharp.Helpers;
-using AngularCsharp.ValueObjects;
+using AngularCSharp.Helpers;
+using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using Moq;
 
-namespace AngularCsharp.Processors.Tests.Processors
+namespace AngularCSharp.Processors.Tests.Processors
 {
     [TestClass()]
     public class ForProcessorTest

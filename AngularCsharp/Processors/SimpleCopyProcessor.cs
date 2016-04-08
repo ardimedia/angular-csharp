@@ -1,7 +1,7 @@
-﻿using AngularCsharp.ValueObjects;
+﻿using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
 
-namespace AngularCsharp.Processors
+namespace AngularCSharp.Processors
 {
     public class SimpleCopyProcessor : IProcessor
     {

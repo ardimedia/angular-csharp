@@ -1,6 +1,6 @@
-﻿using AngularCsharp.Helpers;
+﻿using AngularCSharp.Helpers;
 
-namespace AngularCsharp.ValueObjects
+namespace AngularCSharp.ValueObjects
 {
     public class Dependencies
     {

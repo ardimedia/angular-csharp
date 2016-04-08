@@ -1,8 +1,8 @@
 ﻿using System.Linq;
-using AngularCsharp.Helpers;
+using AngularCSharp.Helpers;
 using HtmlAgilityPack;
 
-namespace AngularCsharp
+namespace AngularCSharp
 {
     public class AngularService
     {

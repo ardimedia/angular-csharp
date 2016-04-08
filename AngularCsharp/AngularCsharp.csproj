@@ -7,8 +7,8 @@
     <ProjectGuid>{07543C3B-00DB-459D-AD96-D2695673C020}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>AngularCsharp</RootNamespace>
-    <AssemblyName>AngularCsharp</AssemblyName>
+    <RootNamespace>AngularCSharp</RootNamespace>
+    <AssemblyName>AngularCSharp</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -22,6 +22,7 @@
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
     <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -64,6 +65,8 @@
     <Compile Include="Helpers\ValueFinder.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="!Readme.md" />
+    <None Include="Package.nuspec" />
     <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

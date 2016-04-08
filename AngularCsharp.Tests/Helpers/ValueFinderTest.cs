@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
-using AngularCsharp.Helpers;
+using AngularCSharp.Helpers;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AngularCsharp.Tests.Helpers
+namespace AngularCSharp.Tests.Helpers
 {
     [TestClass]
     public class ValueFinderTest

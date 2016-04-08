@@ -1,9 +1,9 @@
 ﻿using System.Collections.Generic;
-using AngularCsharp.Helpers;
+using AngularCSharp.Helpers;
 using HtmlAgilityPack;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace AngularCsharp.ValueObjects.Tests.ValueObjects
+namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 {
     [TestClass()]
     public class NodeContextTest
