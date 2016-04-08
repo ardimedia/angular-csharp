@@ -1,0 +1,41 @@
+﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+using AngularCsharp.Helpers;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace AngularCsharp.Helpers.Tests.Helpers
+{
+    [TestClass]
+    public class LoggerTests
+    {
+        [TestMethod]
+        public void Helpers_Logger_Construct()
+        {
+            // Act
+            var sut = new Logger();
+
+            // Assert
+            Assert.IsFalse(sut.HasWarnings);
+            Assert.AreEqual(0, sut.AllWarnings.Length);
+        }
+
+        [TestMethod]
+        public void Helpers_Logger_AddWarning()
+        {
+            // Assign
+            var sut = new Logger();
+            var message = "Error";
+
+            // Act
+            sut.AddWarning(message);
+
+            // Assert
+            Assert.AreEqual(1, sut.AllWarnings.Length);
+            Assert.AreEqual(message, sut.AllWarnings[0]);
+            Assert.IsTrue(sut.HasWarnings);
+        }
+    }
+}
