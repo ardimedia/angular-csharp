@@ -23,14 +23,14 @@ namespace AngularCsharp.ValueObjects
 
         public Dependencies()
         {
-            LoadDefaults();
+            GetDefaults();
         }
 
         #endregion
 
         #region Private methods
 
-        private void LoadDefaults()
+        public void GetDefaults()
         {
             Logger = new Logger();
             ValueFinder = new ValueFinder();
