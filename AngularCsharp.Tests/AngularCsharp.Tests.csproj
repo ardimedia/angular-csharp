@@ -62,6 +62,8 @@
   <ItemGroup>
     <Compile Include="!TestData\Domain\Email.cs" />
     <Compile Include="!TestData\Domain\Person.cs" />
+    <Compile Include="!TestData\Domain\PrintApproval.cs" />
+    <Compile Include="!TestData\Domain\WorkOrder.cs" />
     <Compile Include="Helpers\ExpressionResolverTest.cs" />
     <Compile Include="Helpers\LoggerTest.cs" />
     <Compile Include="Helpers\ValueFinderTest.cs" />
@@ -74,13 +76,19 @@
     <Compile Include="ValueObjects\NodeContextTest.cs" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="!TestData\angular2\complex-template.result.html">
+    <Content Include="!TestData\Html\!Readme.txt" />
+    <Content Include="!TestData\Html\printApprovalOpenSalesRep.result.txt">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="!TestData\angular2\complex-template.html">
+    <Content Include="!TestData\Html\template1.result.html">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="!TestData\angular2\simple1.html" />
+    <Content Include="!TestData\Html\template1.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="!TestData\Html\printApprovalOpenSalesRep.html">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\AngularCsharp\AngularCSharp.csproj">

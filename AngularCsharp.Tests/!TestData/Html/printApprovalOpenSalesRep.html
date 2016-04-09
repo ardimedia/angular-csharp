@@ -1,0 +1,113 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Reminder Mail Dessertkarten: Offene GzD Aufträge - Übersicht</title>
+    <link href="../style1.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="am-box-big">
+        <p>Hallo {{salesAgent.FullName}}</p>
+        <p>
+            Im folgenden erhalten Sie eine Liste aller Ihnen zugeordneten, offenen GzD Dessertkarten-Aufträge.
+            Rot markierte Aufträge sind seit mehr als 4 Tage nicht bearbeitet.
+        </p>
+        <p>Ihr MyDessert Team</p>
+    </div>
+
+    <table style="width:100%">
+        <thead class="am-bg-color-blue">
+            <tr class="am-bg-color-blue">
+                <td colspan="3">
+                    <div class="am-box-big">Offene GzD Aufträge die von <b>Ihren Kunden</b> bearbeitet werden müssen</div>
+                </td>
+            </tr>
+            <tr class="am-bg-color-blue">
+                <td style="width:200px;">Auftragsnummer</td>
+                <td style="">Kunde (Name, Ort)</td>
+                <td style="width:150px;text-align:right;">Offen seit</td>
+            </tr>
+        </thead>
+        <tbody>
+            <template *ngFor="#printApproval in printApprovalsCustomer">
+                <tr>
+                    <td>{{printApproval.WorkOrder.NestleOrderNo}}</td>
+                    <td>{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>
+                    <td style="text-align:right;">{{printApproval.RecordModifiedAt}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <table style="width:100%">
+                            <tr *ngIf="printApproval.CustomerHintFromControllCenter">
+                                <td class="am-color-blue" style="width:270px;">Kontrollstellenhinweis an Kunde</td>
+                                <td>
+                                    <pre>{{printApproval.CustomerHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.SalesRepHintFromControllCenter">
+                                <td class="am-color-blue">Kontrollstellenhinweis an Sales Rep</td>
+                                <td>
+                                    <pre>{{printApproval.SalesRepHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
+            </template>
+        </tbody>
+    </table>
+    <br /><br />
+    <table style="width:100%">
+        <thead class="am-bg-color-blue">
+            <tr>
+                <td colspan="3">
+                    <div class="am-box-big">Offene GzD Aufträge die von <b>Ihnen</b> bearbeitet werden müssen</div>
+                </td>
+            </tr>
+            <tr>
+                <td style="width:200px;">Auftragsnummer</td>
+                <td style="">Kunde (Name, Ort)</td>
+                <td style="width:150px;text-align:right;">Offen seit</td>
+            </tr>
+        </thead>
+        <tbody>
+            <template *ngFor="#printApproval in printApprovalsSalesRep">
+                <tr>
+                    <td>{{printApproval.WorkOrder.NestleOrderNo}}</td>
+                    <td>{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>
+                    <td style="text-align:right;">{{printApproval.RecordModifiedAt}}</td>
+                </tr>
+                <tr>
+                    <td></td>
+                    <td colspan="2">
+                        <table style="width:100%">
+                            <tr *ngIf="printApproval.CustomerComment">
+                                <td class="am-color-blue" style="width:270px;">Kundenkommentar</td>
+                                <td>
+                                    <pre>{{printApproval.CustomerComment}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.CustomerHintFromControllCenter">
+                                <td class="am-color-blue">Kontrollstellenhinweis an Kunde</td>
+                                <td>
+                                    <pre>{{printApproval.CustomerHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.SalesRepHintFromControllCenter">
+                                <td class="am-color-blue">Kontrollstellenhinweis an Sales Rep</td>
+                                <td>
+                                    <pre>{{printApproval.SalesRepHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
+            </template>
+        </tbody>
+    </table>
+</body>
+</html>
