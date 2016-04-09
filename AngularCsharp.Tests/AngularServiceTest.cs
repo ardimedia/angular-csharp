@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AngularCSharp.Tests._TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -280,20 +281,16 @@ namespace AngularCSharp.Tests
 
         #endregion
 
-        #region AngularService_Render_ComplexTemplate
+        #region AngularService_Render_ForProcessor
 
         [TestMethod]
-        [DeploymentItem(@"!TestData\angular2\complex-template.html", @"!TestData")]
-        [DeploymentItem(@"!TestData\angular2\complex-template.result.html", @"!TestData")]
-        public void AngularService_Render_ComplexTemplate()
+        public void AngularService_Render_ForProcessor_Items_0()
         {
             // Assign
-            var template = System.IO.File.ReadAllText(@"!TestData\complex-template.html");
-            var model = new { customer = new { salutation = "Hallo Herbert!" }, items = new[] {
-                new { number = "001", title = "TEST 1", status = "done" },
-                new { number = "002", title = "TEST 2", status = "new" }
-            } };
-            string expected = System.IO.File.ReadAllText(@"!TestData\complex-template.result.html");
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+            List<Person> persons = Person.GetRandoms(0);
+            var model = new { persons };
+            var expected = "";
             var sut = new AngularService(template);
 
             // Act
@@ -301,6 +298,146 @@ namespace AngularCSharp.Tests
 
             // Assert
             Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_1()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+
+            List<Person> persons = Person.GetRandoms(1);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p>{person.FirstName}</p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_5()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+
+            List<Person> persons = Person.GetRandoms(5);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p>{person.FirstName}</p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_1_Inner_Html()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\"><div>{{person.FirstName}}</div></p>";
+
+            List<Person> persons = Person.GetRandoms(1);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p><div>{person.FirstName}</div></p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        #endregion
+
+        #region AngularService_Render_Integration_Tests
+
+        [TestMethod]
+        [DeploymentItem(@"!TestData\Html\template1.html", @"!TestData")]
+        [DeploymentItem(@"!TestData\Html\template1.result.html", @"!TestData")]
+        public void AngularService_Render_Integration_ComplexTemplate()
+        {
+            // Assign
+            var template = System.IO.File.ReadAllText(@"!TestData\template1.html");
+            var model = new
+            {
+                customer = new { salutation = "Hallo Herbert!" },
+                items = new[] {
+                new { number = "001", title = "TEST 1", status = "done" },
+                new { number = "002", title = "TEST 2", status = "new" }
+            }
+            };
+            string expected = System.IO.File.ReadAllText(@"!TestData\template1.result.html");
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+        }
+
+        [TestMethod]
+        [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.html", @"!TestData")]
+        [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.result.txt", @"!TestData")]
+        public void AngularService_Render_Integration_PrintApprovalOpenSalesRep()
+        {
+            // Assign
+            string template = System.IO.File.ReadAllText(@"!TestData\printApprovalOpenSalesRep.html");
+            var salesAgent = new { FullName = "Jim Blue" };
+            var customerPrintApprovals = PrintApproval.GetValidItems(5);
+            var salesRepPrintApprovals = PrintApproval.GetValidItems(5);
+            var model = new { salesAgent, customerPrintApprovals, salesRepPrintApprovals };
+            string expected = System.IO.File.ReadAllText(@"!TestData\printApprovalOpenSalesRep.result.txt");
+            AngularService sut = new AngularService(template);
+
+            // Act
+            string result = sut.Render(model);
+
+            // Log
+            foreach (var warning in sut.Logger.Warnings)
+            {
+                Console.WriteLine($"Warning: {warning}");
+            }
+
+            // Assert
+            #region Assert result (file content)
+
+            string[] resultLines = result.Split(Environment.NewLine.ToCharArray());
+            string[] expectedLines = expected.Split(Environment.NewLine.ToCharArray());
+            for (int i = 0; i < resultLines.Count(); i++)
+            {
+                Assert.AreEqual<string>(expectedLines[i], resultLines[i]);
+            }
+            Assert.AreEqual<int>(expectedLines.Count(), resultLines.Count(), "Line count must be the same.");
+
+            #endregion
+            Assert.AreEqual<int>(0, sut.Logger.Warnings.Count(), "No warnings expected. See warnings in [output].");
         }
 
         #endregion
