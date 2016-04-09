@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AngularCSharp.Tests._TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
@@ -280,6 +281,76 @@ namespace AngularCSharp.Tests
 
         #endregion
 
+        #region AngularService_Render_ForProcessor
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_0()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+            List<Person> persons = Person.GetRandoms(0);
+            var model = new { persons };
+            var expected = "";
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_1()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+
+            List<Person> persons = Person.GetRandoms(1);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p>{person.FirstName}</p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_5()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\">{{person.FirstName}}</p>";
+
+            List<Person> persons = Person.GetRandoms(5);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p>{person.FirstName}</p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        #endregion
+
         #region AngularService_Render_Integration_Tests
 
         [TestMethod]
@@ -307,6 +378,7 @@ namespace AngularCSharp.Tests
             Assert.AreEqual(expected, result);
         }
 
+        [Ignore]
         [TestMethod]
         [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.html", @"!TestData")]
         [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.result.txt", @"!TestData")]
