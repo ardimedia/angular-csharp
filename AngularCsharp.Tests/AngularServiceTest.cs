@@ -349,6 +349,30 @@ namespace AngularCSharp.Tests
             Assert.IsFalse(sut.Logger.HasWarnings);
         }
 
+        [TestMethod]
+        public void AngularService_Render_ForProcessor_Items_1_Inner_Html()
+        {
+            // Assign
+            var template = "<p *ngFor=\"#person of persons\"><div>{{person.FirstName}}</div></p>";
+
+            List<Person> persons = Person.GetRandoms(1);
+            var model = new { persons };
+            var expected = "";
+            foreach (var person in persons)
+            {
+                expected += $"<p><div>{person.FirstName}</div></p>";
+            }
+
+            var sut = new AngularService(template);
+
+            // Act
+            var result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
         #endregion
 
         #region AngularService_Render_Integration_Tests
@@ -356,7 +380,7 @@ namespace AngularCSharp.Tests
         [TestMethod]
         [DeploymentItem(@"!TestData\Html\template1.html", @"!TestData")]
         [DeploymentItem(@"!TestData\Html\template1.result.html", @"!TestData")]
-        public void AngularService_Render_ComplexTemplate()
+        public void AngularService_Render_Integration_ComplexTemplate()
         {
             // Assign
             var template = System.IO.File.ReadAllText(@"!TestData\template1.html");
@@ -378,17 +402,17 @@ namespace AngularCSharp.Tests
             Assert.AreEqual(expected, result);
         }
 
-        [Ignore]
         [TestMethod]
         [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.html", @"!TestData")]
         [DeploymentItem(@"!TestData\Html\printApprovalOpenSalesRep.result.txt", @"!TestData")]
-        public void AngularService_Render_PrintApprovalOpenSalesRep()
+        public void AngularService_Render_Integration_PrintApprovalOpenSalesRep()
         {
             // Assign
             string template = System.IO.File.ReadAllText(@"!TestData\printApprovalOpenSalesRep.html");
             var salesAgent = new { FullName = "Jim Blue" };
-            var printApprovalsCustomer = PrintApproval.GetRandoms(5);
-            var model = new { salesAgent, printApprovalsCustomer };
+            var customerPrintApprovals = PrintApproval.GetValidItems(5);
+            var salesRepPrintApprovals = PrintApproval.GetValidItems(5);
+            var model = new { salesAgent, customerPrintApprovals, salesRepPrintApprovals };
             string expected = System.IO.File.ReadAllText(@"!TestData\printApprovalOpenSalesRep.result.txt");
             AngularService sut = new AngularService(template);
 

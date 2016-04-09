@@ -21,25 +21,30 @@ namespace AngularCSharp.Tests._TestData.Domain
 
         #region Public Methods
 
-        public static PrintApproval GetRandom()
-        {
-            PrintApproval printApproval = new PrintApproval();
-            printApproval.WorkOrder = WorkOrder.GetRandom();
-            printApproval.RecordModifiedAt = DateTimeOffset.Now;
+        private static int globalId = 0;
 
-            printApproval.CustomerHintFromControllCenter = $"Customer Hint From Controll Center {new Random(DateTime.Now.Millisecond).Next(0, 999)}";
-            printApproval.SalesRepHintFromControllCenter = $"Sales Rep Hint From Controll Center {new Random(DateTime.Now.Millisecond).Next(0, 999)}";
-            printApproval.CustomerComment = $"Customer Comment {new Random(DateTime.Now.Millisecond).Next(0, 999)}";
+        public static PrintApproval GetValid(int id = 1)
+        {
+            globalId = globalId + id;
+            DateTimeOffset recordModifiedAt = new DateTimeOffset(2016, 1, 2, 13, 14, 15, new TimeSpan());
+
+            PrintApproval printApproval = new PrintApproval();
+            printApproval.WorkOrder = WorkOrder.GetValid(id);
+            printApproval.RecordModifiedAt = recordModifiedAt;
+
+            printApproval.CustomerHintFromControllCenter = $"Customer Hint From Controll Center {globalId}";
+            printApproval.SalesRepHintFromControllCenter = $"Sales Rep Hint From Controll Center {globalId}";
+            printApproval.CustomerComment = $"Customer Comment {globalId}";
             return printApproval;
         }
 
-        public static List<PrintApproval> GetRandoms(int count)
+        public static List<PrintApproval> GetValidItems(int count, int id = 1)
         {
             List<PrintApproval> printApprovals = new List<PrintApproval>();
 
             for (int i = 0; i < count; i++)
             {
-                printApprovals.Add(PrintApproval.GetRandom());
+                printApprovals.Add(PrintApproval.GetValid(id));
             }
 
             return printApprovals;

@@ -11,6 +11,48 @@ namespace AngularCSharp.Processors.Tests.Processors
     [TestClass()]
     public class ForProcessorTest
     {
+        #region Processors_ForProcessor_Invalid_Syntax
+
+        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
+        [Ignore]
+        [TestMethod()]
+        public void Processors_ForProcessor_Invalid_Syntax_Empty()
+        {
+            // Assign
+            ForProcessor sut = new ForProcessor();
+            HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"\">Invalid Syntax</p>");
+            HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
+            NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+
+            // Act
+            ProcessResults results = sut.ProcessNode(nodeContext);
+
+            // Assert results
+            Assert.IsNotNull(results);
+        }
+
+        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
+        [Ignore]
+        [TestMethod()]
+        public void Processors_ForProcessor_Invalid_Syntax_in_InsteadOf_of()
+        {
+            // Assign
+            ForProcessor sut = new ForProcessor();
+            HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"#person in persons\">Invalid Syntax</p>");
+            HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
+            NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+
+            // Act
+            ProcessResults results = sut.ProcessNode(nodeContext);
+
+            // Assert results
+            Assert.IsNotNull(results);
+        }
+
+        #endregion
+
+        #region Processors_ForProcessor_ProcessNode
+
         [TestMethod()]
         public void Processors_ForProcessor_ProcessNode_Ignore()
         {
@@ -74,7 +116,7 @@ namespace AngularCSharp.Processors.Tests.Processors
             Dictionary<string, object> variables = new Dictionary<string, object>() { { "customers", customers } };
 
             Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
-            valueFinderMock.Setup(mock => mock.GetList("customers", It.IsAny<IDictionary<string,object>>())).Returns(customers);
+            valueFinderMock.Setup(mock => mock.GetList("customers", It.IsAny<IDictionary<string, object>>())).Returns(customers);
             int index = 0;
             valueFinderMock.Setup(mock => mock.GetString("number", It.IsAny<IDictionary<string, object>>())).Returns(() => customers[index].number.ToString()).Callback(() => index++);
 
@@ -93,6 +135,10 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.AreEqual("<p>Hallo #" + customers[0].number + "</p>", results.OutputNodes[0].OuterHtml);
             Assert.AreEqual("<p>Hallo #" + customers[1].number + "</p>", results.OutputNodes[1].OuterHtml);
         }
+
+        #endregion
+
+        #region Private Methods
 
         private HtmlDocument GetHtmlDocument(string html)
         {
@@ -122,5 +168,7 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
         }
+
+        #endregion
     }
 }

@@ -11,7 +11,7 @@
         <p>Hallo {{salesAgent.FullName}}</p>
         <p>
             Im folgenden erhalten Sie eine Liste aller Ihnen zugeordneten, offenen GzD Dessertkarten-Aufträge.
-            Rot markierte Aufträge sind seit mehr als 4 Tage nicht bearbeitet.
+            Rot markierte Aufträge sind seit mehr als 4 Tagen nicht bearbeitet.
         </p>
         <p>Ihr MyDessert Team</p>
     </div>
@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <template *ngFor="#printApproval in printApprovalsCustomer">
+            <template *ngFor="#printApproval of customerPrintApprovals">
                 <tr>
                     <td>{{printApproval.WorkOrder.NestleOrderNo}}</td>
                     <td>{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>
@@ -74,7 +74,7 @@
             </tr>
         </thead>
         <tbody>
-            <template *ngFor="#printApproval in printApprovalsSalesRep">
+            <template *ngFor="#printApproval of salesRepPrintApprovals">
                 <tr>
                     <td>{{printApproval.WorkOrder.NestleOrderNo}}</td>
                     <td>{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>

@@ -16,12 +16,15 @@ namespace AngularCSharp.Tests._TestData.Domain
 
         #region Public Methods
 
-        public static WorkOrder GetRandom()
+        private static int globalId = 0;
+
+        public static WorkOrder GetValid(int id, int year = 2016)
         {
+            id = globalId + id;
             WorkOrder workOrder = new WorkOrder();
-            workOrder.NestleOrderNo = $"{DateTime.Now.Year}-{new Random(DateTime.Now.Millisecond).Next(0,999)}-{new Random(DateTime.Now.Millisecond).Next(0, 999999)}";
-            workOrder.CustomerName = $"Customer Name {new Random(DateTime.Now.Millisecond).Next(0, 999)}";
-            workOrder.CustomerAddressCity = $"Customer Address City {new Random(DateTime.Now.Millisecond).Next(0, 999)}";
+            workOrder.NestleOrderNo = $"{year}-{globalId}-{globalId}";
+            workOrder.CustomerName = $"Customer Name {globalId}";
+            workOrder.CustomerAddressCity = $"Customer Address City {globalId}";
             return workOrder;
         }
 
