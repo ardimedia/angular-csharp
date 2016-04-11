@@ -10,13 +10,16 @@ namespace AngularCSharp.Helpers
 
         private ValueFinder valueFinder;
 
+        private Logger logger;
+
         #endregion
 
         #region Constructors
 
-        public ExpressionResolver(ValueFinder valueFinder)
+        public ExpressionResolver(ValueFinder valueFinder, Logger logger)
         {
             this.valueFinder = valueFinder;
+            this.logger = logger;
         }
 
         #endregion
@@ -37,7 +40,7 @@ namespace AngularCSharp.Helpers
                 value = this.valueFinder.GetObject(expression, variables);
             } catch (ValueNotFoundException)
             {
-                // TODO: Log warning
+                this.logger.AddWarning($"Value { expression } not found");
             }
 
             if (value == null)

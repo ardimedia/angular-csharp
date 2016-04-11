@@ -37,7 +37,7 @@ namespace AngularCSharp.Processors.Tests.Processors
             IfProcessor toc = new IfProcessor();
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngif=\"customer\">Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
-            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object);
+            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object, new Logger());
             Dictionary<string, object> variables = new Dictionary<string, object>() { { "customer", new { number = "2000" } } };
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(true);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
@@ -61,7 +61,7 @@ namespace AngularCSharp.Processors.Tests.Processors
             IfProcessor toc = new IfProcessor();
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngif=\"customer\">Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
-            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object);
+            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object, new Logger());
             Dictionary<string, object> variables = new Dictionary<string, object>();
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(false);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
@@ -99,7 +99,7 @@ namespace AngularCSharp.Processors.Tests.Processors
                 dependencies.ExpressionResolver = expressionResolver;
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
+            return new NodeContext(variables, node, dependencies, new TemplateEngine());
         }
     }
 }

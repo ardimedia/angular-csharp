@@ -32,12 +32,12 @@ namespace AngularCSharp.Helpers
         public string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
         {
             // Process template
-            var variables = GetGlobalVariables(model);
+            var variables = this.Dependencies.ValueFinder.GetAllProperties(model);
             var htmlDocumentOutput = new HtmlDocument();
 
             foreach (HtmlNode childNode in htmlDocumentInput.DocumentNode.ChildNodes)
             {
-                var context = new NodeContext(variables, childNode, htmlDocumentOutput, this.Dependencies, this);
+                var context = new NodeContext(variables, childNode, this.Dependencies, this);
                 ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
@@ -95,18 +95,6 @@ namespace AngularCSharp.Helpers
                 new ForProcessor(),
                 new ExpressionsProcessor()
             };
-        }
-
-        private Dictionary<string, object> GetGlobalVariables(object model)
-        {
-            // TODO: Move this function to ValueFinder class
-            var dict = new Dictionary<string, object>();
-            foreach (PropertyInfo propertyInfo in model.GetType().GetProperties())
-            {
-                dict.Add(propertyInfo.Name, propertyInfo.GetValue(model));
-            }
-
-            return dict;
         }
 
         #endregion

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using AngularCSharp.Exceptions;
+using System.Reflection;
 
 namespace AngularCSharp.Helpers
 {
@@ -15,8 +16,15 @@ namespace AngularCSharp.Helpers
 
         public virtual string GetString(string key, IDictionary<string, object> lookup)
         {
-            // TODO: Verify key (must not be empty)
-            // TODO: Verify lookup (must not be empty)
+            if (String.IsNullOrWhiteSpace(key))
+            {
+                throw new ArgumentException("Key is null or empty");
+            }
+
+            if (lookup == null)
+            {
+                throw new ArgumentException("Lookup dictionary is null");
+            }
 
             object result = GetObject(key, lookup);
 
@@ -31,10 +39,7 @@ namespace AngularCSharp.Helpers
                 return (IEnumerable) list;
             }
 
-            // TODO: Add warning about wrong variable
-
-            // Return object array with found item
-            return new Object[1] { list };
+            throw new InvalidCastException("List object doesn't implement IEnumerable");
         }
         public virtual object GetObject(string key, IDictionary<string, object> lookup)
         {
@@ -42,11 +47,26 @@ namespace AngularCSharp.Helpers
 
             foreach (string keyPart in key.Split('.'))
             {
+                if (model == null)
+                {
+                    throw new ValueNotFoundException();
+                }
+
                 model = FindProperty(model, keyPart);
             }
 
-            // TODO: Return exception, since key could not by found
             return model;
+        }
+
+        public Dictionary<string, object> GetAllProperties(object model)
+        {
+            var dictionary = new Dictionary<string, object>();
+            foreach (PropertyInfo propertyInfo in model.GetType().GetProperties())
+            {
+                dictionary.Add(propertyInfo.Name, propertyInfo.GetValue(model));
+            }
+
+            return dictionary;
         }
 
         #endregion

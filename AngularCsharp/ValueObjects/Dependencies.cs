@@ -27,9 +27,9 @@ namespace AngularCSharp.ValueObjects
 
         public void GetDefaults()
         {
-            Logger = new Logger();
-            ValueFinder = new ValueFinder();
-            ExpressionResolver = new ExpressionResolver(ValueFinder);
+            this.Logger = new Logger();
+            this.ValueFinder = new ValueFinder();
+            this.ExpressionResolver = new ExpressionResolver(ValueFinder, this.Logger);
         }
 
         #endregion

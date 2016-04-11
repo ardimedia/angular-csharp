@@ -103,7 +103,7 @@ namespace AngularCSharp.Processors.Tests.Processors
                 variables = new Dictionary<string, object>();
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
+            return new NodeContext(variables, node, new Dependencies(), new TemplateEngine());
         }
     }
 }

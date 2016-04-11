@@ -14,7 +14,6 @@ namespace AngularCSharp.Processors.Tests.Processors
         #region Processors_ForProcessor_Invalid_Syntax
 
         // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [Ignore]
         [TestMethod()]
         public void Processors_ForProcessor_Invalid_Syntax_Empty()
         {
@@ -31,10 +30,10 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             // Assert results
             Assert.IsNotNull(results);
+            Assert.AreEqual(1, nodeContext.Dependencies.Logger.Warnings.Length);
         }
 
         // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [Ignore]
         [TestMethod()]
         public void Processors_ForProcessor_Invalid_Syntax_in_InsteadOf_of()
         {
@@ -51,6 +50,7 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             // Assert results
             Assert.IsNotNull(results);
+            Assert.AreEqual(1, nodeContext.Dependencies.Logger.Warnings.Length);
         }
 
         #endregion
@@ -149,8 +149,8 @@ namespace AngularCSharp.Processors.Tests.Processors
         #region Processors_ForProcessor_ProcessNode
 
         // TODO: 2016-04-10/hp: if the template tag is used, remove it from the output
-        [Ignore]
         [TestMethod()]
+        [Ignore]
         public void Processors_ForProcessor_Template_Tag()
         {
             // Assign
@@ -167,7 +167,8 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             // Assert results
             Assert.IsNotNull(results);
-            //Assert.AreEqual<string>(expected, results.OutputNodes);
+            Assert.AreEqual(1, results.OutputNodes.Count);
+            Assert.AreEqual<string>(expected, results.OutputNodes[0].OuterHtml);
         }
 
         #endregion
@@ -200,7 +201,7 @@ namespace AngularCSharp.Processors.Tests.Processors
                 dependencies.ValueFinder = valueFinder;
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
+            return new NodeContext(variables, node, dependencies, new TemplateEngine());
         }
 
         #endregion
