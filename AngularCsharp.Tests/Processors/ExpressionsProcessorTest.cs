@@ -9,6 +9,8 @@ namespace AngularCSharp.Processors.Tests.Processors
     [TestClass()]
     public class ExpressionsProcessorTest
     {
+        #region Processors_ExpressionProcessor_ProcessNode
+
         [TestMethod()]
         public void Processors_ExpressionProcessor_ProcessNode_ElementNode()
         {
@@ -89,6 +91,10 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.IsFalse(results.StopProcessing);
         }
 
+        #endregion
+
+        #region Private methods
+
         private HtmlDocument GetHtmlDocument(string html)
         {
             HtmlDocument htmlDocument = new HtmlDocument();
@@ -105,5 +111,7 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             return new NodeContext(variables, node, new Dependencies(), new TemplateEngine());
         }
+
+        #endregion
     }
 }

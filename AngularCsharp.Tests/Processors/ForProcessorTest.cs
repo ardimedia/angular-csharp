@@ -8,13 +8,13 @@ using Moq;
 
 namespace AngularCSharp.Processors.Tests.Processors
 {
-    [TestClass()]
+    [TestClass]
     public class ForProcessorTest
     {
         #region Processors_ForProcessor_Invalid_Syntax
 
         // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_Empty()
         {
             // Assign
@@ -34,7 +34,7 @@ namespace AngularCSharp.Processors.Tests.Processors
         }
 
         // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_in_InsteadOf_of()
         {
             // Assign

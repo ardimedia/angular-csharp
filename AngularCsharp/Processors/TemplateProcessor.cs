@@ -6,7 +6,13 @@ namespace AngularCSharp.Processors
 {
     public class TemplateProcessor : IProcessor
     {
+        #region Private constants
+
         private const string TAG_NAME = "template";
+
+        #endregion
+
+        #region IProcessor methods
 
         public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
@@ -33,6 +39,10 @@ namespace AngularCSharp.Processors
             }
         }
 
+        #endregion
+
+        #region Private methods
+
         private bool NodeHasAngularAttribute(HtmlNode currentNode)
         {
             foreach (HtmlAttribute attribute in currentNode.Attributes)
@@ -45,5 +55,7 @@ namespace AngularCSharp.Processors
 
             return false;
         }
+
+        #endregion
     }
 }

@@ -5,10 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 {
-    [TestClass()]
+    [TestClass]
     public class NodeContextTest
     {
-        [TestMethod()]
+        #region ValueObjects_NodeContext_Constructor
+
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor()
         {
             // Assign
@@ -28,7 +30,7 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
             Assert.AreSame(dependencies, sut.Dependencies, "Dependencies is wrong");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor_ChangeContext_Shorthand()
         {
             // Assign
@@ -46,7 +48,7 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
             Assert.AreNotSame(sut, changedSut);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor_ChangeContext_AdditionalVariables()
         {
             // Assign
@@ -71,5 +73,7 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 
             Assert.AreNotSame(sut, changedSut, "new instance must not be the same as old instance");
         }
+
+        #endregion
     }
 }

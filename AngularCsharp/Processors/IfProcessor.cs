@@ -6,7 +6,13 @@ namespace AngularCSharp.Processors
 {
     public class IfProcessor : IProcessor
     {
+        #region Private constants
+
         private const string ATTRIBUTE_NAME = "*ngif";
+
+        #endregion
+
+        #region IProcessor methods
 
         public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
@@ -36,6 +42,10 @@ namespace AngularCSharp.Processors
             }
         }
 
+        #endregion
+
+        #region Private methods
+
         private bool IsTrue(NodeContext nodeContext)
         {
             var expression = nodeContext.CurrentNode.Attributes["*ngif"].Value;
@@ -43,5 +53,7 @@ namespace AngularCSharp.Processors
 
             return nodeContext.Dependencies.ExpressionResolver.IsTrue(expression, variables);
         }
+
+        #endregion
     }
 }

@@ -9,6 +9,8 @@ namespace AngularCSharp.Tests.Helpers
     [TestClass]
     public class ExpressionResolverTest
     {
+        #region Helpers_ExpressionResolver_Constructor
+
         [TestMethod]
         public void Helpers_ExpressionResolver_Constructor()
         {
@@ -22,6 +24,10 @@ namespace AngularCSharp.Tests.Helpers
             // Assert
             Assert.IsNotNull(sut);
         }
+
+        #endregion
+
+        #region Helpers_ExpressionResolver_IsTrue
 
         [TestMethod]
         public void Helpers_ExpressionResolver_IsTrue_True()
@@ -38,6 +44,23 @@ namespace AngularCSharp.Tests.Helpers
 
             // Assert
             Assert.IsTrue(result);
+        }
+
+        [TestMethod]
+        public void Helpers_ExpressionResolver_IsTrue_False()
+        {
+            // Assign
+            Dictionary<string, object> variables = GetVariables();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
+            valueFinderMock.Setup(mock => mock.GetObject("hasOrders", variables)).Returns(false);
+            Logger logger = new Logger();
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
+
+            // Act
+            var result = sut.IsTrue("hasOrders", variables);
+
+            // Assert
+            Assert.IsFalse(result);
         }
 
         [TestMethod]
@@ -75,22 +98,9 @@ namespace AngularCSharp.Tests.Helpers
             Assert.IsFalse(result);
         }
 
-        [TestMethod]
-        public void Helpers_ExpressionResolver_IsFalse()
-        {
-            // Assign
-            Dictionary<string, object> variables = GetVariables();
-            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
-            valueFinderMock.Setup(mock => mock.GetObject("hasOrders", variables)).Returns(false);
-            Logger logger = new Logger();
-            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
+        #endregion
 
-            // Act
-            var result = sut.IsTrue("hasOrders", variables);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
+        #region Helpers_ExpressionResolver_Variables
 
         private Dictionary<string, object> GetVariables()
         {
@@ -101,5 +111,7 @@ namespace AngularCSharp.Tests.Helpers
                 { "hasOrders", false }
             };
         }
+
+        #endregion
     }
 }

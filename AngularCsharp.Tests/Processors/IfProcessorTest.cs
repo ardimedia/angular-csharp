@@ -7,10 +7,12 @@ using Moq;
 
 namespace AngularCSharp.Processors.Tests.Processors
 {
-    [TestClass()]
+    [TestClass]
     public class IfProcessorTest
     {
-        [TestMethod()]
+        #region Processors_ExpressionProcessor_ProcessNode
+
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_Ignore()
         {
             // Assign
@@ -30,7 +32,7 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.IsFalse(results.SkipChildNodes);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_True()
         {
             // Assign
@@ -54,7 +56,7 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.IsFalse(results.SkipChildNodes);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_False()
         {
             // Assign
@@ -77,6 +79,10 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.AreEqual(0, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
         }
+
+        #endregion
+
+        #region Private methods
 
         private HtmlDocument GetHtmlDocument(string html)
         {
@@ -101,5 +107,7 @@ namespace AngularCSharp.Processors.Tests.Processors
 
             return new NodeContext(variables, node, dependencies, new TemplateEngine());
         }
+
+        #endregion
     }
 }

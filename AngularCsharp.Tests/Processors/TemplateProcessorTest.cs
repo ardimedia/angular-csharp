@@ -6,13 +6,13 @@ using System.Collections.Generic;
 
 namespace AngularCSharp.Processors.Tests.Processors
 {
-    [TestClass()]
+    [TestClass]
     public class TemplateProcessorTest
     {
 
         #region Processors_TemplateProcessor_ProcessNode
 
-        [TestMethod()]
+        [TestMethod]
         public void Processors_TemplateProcessor_ProcessNode()
         {
             // Assign
@@ -42,7 +42,7 @@ namespace AngularCSharp.Processors.Tests.Processors
         #region Processors_TemplateProcessor_Ignore
 
         // TODO: 2016-04-10/hp: if the template tag is used, remove it from the output
-        [TestMethod()]
+        [TestMethod]
         public void Processors_TemplateProcessor_Ignore()
         {
             // Assign
@@ -69,7 +69,6 @@ namespace AngularCSharp.Processors.Tests.Processors
         }
 
         #endregion
-
 
         #region Private Methods
 

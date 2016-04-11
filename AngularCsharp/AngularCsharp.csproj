@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AngularCsharpService.cs" />
     <Compile Include="AngularService.cs" />
     <Compile Include="Exceptions\ValueNotFoundException.cs" />
     <Compile Include="Helpers\ExpressionResolver.cs" />
