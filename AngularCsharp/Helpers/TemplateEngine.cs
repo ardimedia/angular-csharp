@@ -74,15 +74,18 @@ namespace AngularCSharp.Helpers
             }
 
             // Process childs
-            if (!results.SkipChildNodes && results.OutputNodes.Count > 0)
+            if (!results.SkipChildNodes)
             {
                 foreach (HtmlNode childNode in context.CurrentNode.ChildNodes)
                 {
                     // Change context
                     var childContext = context.ChangeContext(childNode);
 
+                    // Find target node
+                    HtmlNode childTargetNode = targetNode.HasChildNodes ? targetNode.LastChild : targetNode;
+
                     // Process child node
-                    ProcessNode(childContext, targetNode.LastChild);
+                    ProcessNode(childContext, childTargetNode);
                 }
             }
         }
@@ -93,7 +96,8 @@ namespace AngularCSharp.Helpers
             {
                 new IfProcessor(),
                 new ForProcessor(),
-                new ExpressionsProcessor()
+                new ExpressionsProcessor(),
+                new TemplateProcessor()
             };
         }
 

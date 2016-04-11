@@ -146,33 +146,6 @@ namespace AngularCSharp.Processors.Tests.Processors
 
         #endregion
 
-        #region Processors_ForProcessor_ProcessNode
-
-        // TODO: 2016-04-10/hp: if the template tag is used, remove it from the output
-        [TestMethod()]
-        [Ignore]
-        public void Processors_ForProcessor_Template_Tag()
-        {
-            // Assign
-            ForProcessor sut = new ForProcessor();
-            HtmlDocument htmlDocument = GetHtmlDocument("<template *ngFor=\"\"><p>{{firstName}}</p></template>");
-            HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
-            NodeContext nodeContext = GetNodeContextInstance(htmlNode);
-            string expected = "<p>Jim</p><p>Blue</p>";
-            ProcessResults results = new ProcessResults();
-            results.OutputNodes.Add(htmlNode.CloneNode(false));
-
-            // Act
-            sut.ProcessNode(nodeContext, results);
-
-            // Assert results
-            Assert.IsNotNull(results);
-            Assert.AreEqual(1, results.OutputNodes.Count);
-            Assert.AreEqual<string>(expected, results.OutputNodes[0].OuterHtml);
-        }
-
-        #endregion
-
         #region Private Methods
 
         private HtmlDocument GetHtmlDocument(string html)
