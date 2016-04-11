@@ -41,7 +41,6 @@ namespace AngularCSharp.Processors.Tests.Processors
 
         #region Processors_TemplateProcessor_Ignore
 
-        // TODO: 2016-04-10/hp: if the template tag is used, remove it from the output
         [TestMethod]
         public void Processors_TemplateProcessor_Ignore()
         {

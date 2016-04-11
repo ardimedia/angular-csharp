@@ -13,7 +13,6 @@ namespace AngularCSharp.Processors.Tests.Processors
     {
         #region Processors_ForProcessor_Invalid_Syntax
 
-        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
         [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_Empty()
         {
@@ -33,7 +32,6 @@ namespace AngularCSharp.Processors.Tests.Processors
             Assert.AreEqual(1, nodeContext.Dependencies.Logger.Warnings.Length);
         }
 
-        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
         [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_in_InsteadOf_of()
         {
