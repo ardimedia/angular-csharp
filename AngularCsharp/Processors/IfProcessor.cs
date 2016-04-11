@@ -4,38 +4,56 @@ using System.Collections.Generic;
 
 namespace AngularCSharp.Processors
 {
+    /// <summary>
+    /// Processes *ngIf nodes
+    /// </summary>
     public class IfProcessor : IProcessor
     {
         #region Private constants
 
+        /// <summary>
+        /// Name of ngIf attribute
+        /// </summary>
         private const string ATTRIBUTE_NAME = "*ngif";
 
         #endregion
 
         #region IProcessor methods
 
+        /// <summary>
+        /// Processes ngIf nodes
+        /// </summary>
+        /// <param name="nodeContext"></param>
+        /// <param name="results"></param>
         public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
+            // Prepare list for nodes to remove (can't iterate and remove at the same time)
             List<HtmlNode> nodesToRemove = new List<HtmlNode>();
 
+            // Iterate through all outpout nodes
             foreach (HtmlNode outputNode in results.OutputNodes)
             {
+                // Only for nodes with *ngIf attribute
                 if (outputNode.Attributes.Contains(ATTRIBUTE_NAME))
                 {
-                    if (IsTrue(nodeContext))
+                    // Evaluate Angular2 expression
+                    bool isTrue = IsTrue(nodeContext, outputNode);
+
+                    if (isTrue)
                     {
-                        // true -> only remove *ngif attribute
+                        // Expression ist true, remove *ngIf attribute
                         outputNode.Attributes.Remove(ATTRIBUTE_NAME);
                     }
                     else
                     {
-                        // false -> skip processing of child nodes and remove current node from outputNodes list
+                        // Expression is false, skip processing of child nodes and remove current node from outputNodes list
                         nodesToRemove.Add(outputNode);
                         results.SkipChildNodes = true;
                     }
                 }
             }
 
+            // Remove nodes
             foreach (HtmlNode nodeToRemove in nodesToRemove)
             {
                 results.OutputNodes.Remove(nodeToRemove);
@@ -46,11 +64,21 @@ namespace AngularCSharp.Processors
 
         #region Private methods
 
-        private bool IsTrue(NodeContext nodeContext)
+        /// <summary>
+        /// Returns if specified expression is true
+        /// </summary>
+        /// <param name="nodeContext"></param>
+        /// <param name="node"></param>
+        /// <returns></returns>
+        private bool IsTrue(NodeContext nodeContext, HtmlNode node)
         {
-            var expression = nodeContext.CurrentNode.Attributes["*ngif"].Value;
+            // Get attribute value
+            var expression = node.Attributes["*ngif"].Value;
+
+            // Get variables
             var variables = nodeContext.CurrentVariables;
 
+            // Return value from ExpressionResolver class
             return nodeContext.Dependencies.ExpressionResolver.IsTrue(expression, variables);
         }
 

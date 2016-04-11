@@ -7,18 +7,30 @@ using HtmlAgilityPack;
 
 namespace AngularCSharp.Helpers
 {
+    /// <summary>
+    /// This is the core component of AngularCSharp. It iterates through all node, copy it and passes it to all specified processors.
+    /// </summary>
     public class TemplateEngine
     {
         #region Properties
 
+        /// <summary>
+        /// Contains all needed dependencies
+        /// </summary>
         public Dependencies Dependencies { get; private set; }
 
+        /// <summary>
+        /// Contains all needed classes for template processing
+        /// </summary>
         public IProcessor[] Processors { get; set; }
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Constructor (initialize default dependencies and processors)
+        /// </summary>
         public TemplateEngine()
         {
             this.Dependencies = new Dependencies();
@@ -29,6 +41,12 @@ namespace AngularCSharp.Helpers
 
         #region Public methods
 
+        /// <summary>
+        /// Processes the HTML document, replaces variables with specified model and returns processed HTML string
+        /// </summary>
+        /// <param name="htmlDocumentInput">DOM tree of HTML template</param>
+        /// <param name="model">Any object with properties</param>
+        /// <returns></returns>
         public string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
         {
             // Process template
@@ -51,23 +69,31 @@ namespace AngularCSharp.Helpers
 
         #region Private methods
 
+        /// <summary>
+        /// Processing a single node (prepare ProcessResults instance, pass it to all processors, call the same method on child nodes)
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="targetNode"></param>
         public virtual void ProcessNode(NodeContext context, HtmlNode targetNode)
         {
-            // Process current node
+            // Prepare ProcessResults instance
             var results = new ProcessResults();
             results.OutputNodes.Add(context.CurrentNode.CloneNode(false));
 
+            // Iterate through all availabe processors
             foreach (IProcessor processor in GetDefaultProcessors())
             {
+                // Call processor
                 processor.ProcessNode(context, results);
 
+                // Stop processing when necessary (processors can control this)
                 if (results.StopProcessing)
                 {
                     break;
                 }
             }
 
-            // Append nodes to target node
+            // Append output nodes to target DOM
             foreach (HtmlNode outputNode in results.OutputNodes)
             {
                 targetNode.AppendChild(outputNode);

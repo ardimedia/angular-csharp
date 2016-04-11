@@ -4,6 +4,9 @@ using AngularCSharp.Exceptions;
 
 namespace AngularCSharp.Helpers
 {
+    /// <summary>
+    /// Resolves expresssions (for example in ngIf attribute)
+    /// </summary>
     public class ExpressionResolver
     {
         #region Fields
@@ -16,6 +19,11 @@ namespace AngularCSharp.Helpers
 
         #region Constructors
 
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="valueFinder">ValueFinder dependency</param>
+        /// <param name="logger">Logger dependency</param>
         public ExpressionResolver(ValueFinder valueFinder, Logger logger)
         {
             this.valueFinder = valueFinder;
@@ -24,8 +32,14 @@ namespace AngularCSharp.Helpers
 
         #endregion
 
-        #region Methods
+        #region Public methods
 
+        /// <summary>
+        /// Determines if the specified expressions is true
+        /// </summary>
+        /// <param name="expression">Returns true if the value of the expression is true or an available object</param>
+        /// <param name="variables">Dictionary with all available variables</param>
+        /// <returns></returns>
         public virtual bool IsTrue(string expression, IDictionary<string, object> variables)
         {
             if (expression.Substring(0, 1) == "!")

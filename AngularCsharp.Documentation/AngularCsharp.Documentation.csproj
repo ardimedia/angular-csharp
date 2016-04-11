@@ -101,7 +101,6 @@
     <Content Include="toc.yml" />
     <Content Include="index.md" />
     <Content Include="docfx.json" />
-    <Content Include="articles\toc.md" />
     <Content Include="articles\intro.md" />
     <Content Include="api\index.md" />
     <None Include="Web.Debug.config">

@@ -12,6 +12,9 @@ namespace AngularCSharp.Helpers
 
         #region Properties
 
+        /// <summary>
+        /// Returns all warnings
+        /// </summary>
         public string[] Warnings
         {
             get
@@ -20,6 +23,9 @@ namespace AngularCSharp.Helpers
             }
         }
 
+        /// <summary>
+        /// Returns true when warnings are available
+        /// </summary>
         public bool HasWarnings
         {
             get
@@ -32,6 +38,10 @@ namespace AngularCSharp.Helpers
 
         #region Public methods
 
+        /// <summary>
+        /// Add warning for later retrieval
+        /// </summary>
+        /// <param name="warning"></param>
         public void AddWarning(string warning)
         {
             this.warnings.Add(warning);

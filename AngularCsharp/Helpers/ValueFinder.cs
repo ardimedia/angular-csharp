@@ -14,6 +14,12 @@ namespace AngularCSharp.Helpers
     {
         #region Public Methods
 
+        /// <summary>
+        /// Returns string representation of key
+        /// </summary>
+        /// <param name="key">Angular2 expression</param>
+        /// <param name="lookup">Available variables</param>
+        /// <returns></returns>
         public virtual string GetString(string key, IDictionary<string, object> lookup)
         {
             if (String.IsNullOrWhiteSpace(key))
@@ -31,6 +37,12 @@ namespace AngularCSharp.Helpers
             return result.ToString();
         }
 
+        /// <summary>
+        /// Returns enumerable list of key
+        /// </summary>
+        /// <param name="key">Angular2 expression</param>
+        /// <param name="lookup">Available variables</param>
+        /// <returns></returns>
         public virtual IEnumerable GetList(string key, IDictionary<string, object> lookup)
         {
             var list = GetObject(key, lookup);
@@ -41,6 +53,13 @@ namespace AngularCSharp.Helpers
 
             throw new InvalidCastException("List object doesn't implement IEnumerable");
         }
+
+        /// <summary>
+        /// Returns object of key
+        /// </summary>
+        /// <param name="key">Angular2 expression</param>
+        /// <param name="lookup">Available variables</param>
+        /// <returns></returns>
         public virtual object GetObject(string key, IDictionary<string, object> lookup)
         {
             object model = lookup;
@@ -58,6 +77,11 @@ namespace AngularCSharp.Helpers
             return model;
         }
 
+        /// <summary>
+        /// Returns all properties of specified object
+        /// </summary>
+        /// <param name="model">Any object</param>
+        /// <returns></returns>
         public Dictionary<string, object> GetAllProperties(object model)
         {
             var dictionary = new Dictionary<string, object>();
