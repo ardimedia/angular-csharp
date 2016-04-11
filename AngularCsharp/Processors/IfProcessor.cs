@@ -1,5 +1,6 @@
 ﻿using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
+using System.Collections.Generic;
 
 namespace AngularCSharp.Processors
 {
@@ -7,28 +8,32 @@ namespace AngularCSharp.Processors
     {
         private const string ATTRIBUTE_NAME = "*ngif";
 
-        public ProcessResults ProcessNode(NodeContext nodeContext)
+        public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
-            var results = new ProcessResults();
+            List<HtmlNode> nodesToRemove = new List<HtmlNode>();
 
-            if (nodeContext.CurrentNode.Attributes.Contains(ATTRIBUTE_NAME))
+            foreach (HtmlNode outputNode in results.OutputNodes)
             {
-                results.StopProcessing = true;
-                var isTrue = IsTrue(nodeContext);
-
-                if (isTrue)
+                if (outputNode.Attributes.Contains(ATTRIBUTE_NAME))
                 {
-                    var outputNode = nodeContext.CurrentNode.CloneNode(false);
-                    outputNode.Attributes.Remove(ATTRIBUTE_NAME);
-                    results.OutputNodes = new HtmlNode[] { outputNode };
-                } else
-                {
-                    results.SkipChildNodes = true;
-                    results.OutputNodes = new HtmlNode[0];
+                    if (IsTrue(nodeContext))
+                    {
+                        // true -> only remove *ngif attribute
+                        outputNode.Attributes.Remove(ATTRIBUTE_NAME);
+                    }
+                    else
+                    {
+                        // false -> skip processing of child nodes and remove current node from outputNodes list
+                        nodesToRemove.Add(outputNode);
+                        results.SkipChildNodes = true;
+                    }
                 }
             }
 
-            return results;
+            foreach (HtmlNode nodeToRemove in nodesToRemove)
+            {
+                results.OutputNodes.Remove(nodeToRemove);
+            }
         }
 
         private bool IsTrue(NodeContext nodeContext)

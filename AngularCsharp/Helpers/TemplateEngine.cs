@@ -55,28 +55,26 @@ namespace AngularCSharp.Helpers
         {
             // Process current node
             var results = new ProcessResults();
+            results.OutputNodes.Add(context.CurrentNode.CloneNode(false));
+
             foreach (IProcessor processor in GetDefaultProcessors())
             {
-                results = processor.ProcessNode(context);
+                processor.ProcessNode(context, results);
 
-                if (results.OutputNodes != null)
+                if (results.StopProcessing)
                 {
-                    // Don't call multiple processors, cancel as soon one processor returns nodes
                     break;
                 }
             }
 
             // Append nodes to target node
-            if (results.OutputNodes != null)
+            foreach (HtmlNode outputNode in results.OutputNodes)
             {
-                foreach (HtmlNode node in results.OutputNodes)
-                {
-                    targetNode.AppendChild(node);
-                }
+                targetNode.AppendChild(outputNode);
             }
 
             // Process childs
-            if (!results.SkipChildNodes)
+            if (!results.SkipChildNodes && results.OutputNodes.Count > 0)
             {
                 foreach (HtmlNode childNode in context.CurrentNode.ChildNodes)
                 {

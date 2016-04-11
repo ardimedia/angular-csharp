@@ -1,8 +1,8 @@
-﻿using System;
-using System.Text.RegularExpressions;
-using AngularCSharp.Exceptions;
+﻿using AngularCSharp.Exceptions;
 using AngularCSharp.ValueObjects;
 using HtmlAgilityPack;
+using System;
+using System.Text.RegularExpressions;
 
 namespace AngularCSharp.Processors
 {
@@ -16,25 +16,24 @@ namespace AngularCSharp.Processors
 
         #region IProcessor methods
 
-        public ProcessResults ProcessNode(NodeContext nodeContext)
+        public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
-            var newNode = nodeContext.CurrentNode.CloneNode(false);
-
-            if (newNode.NodeType == HtmlAgilityPack.HtmlNodeType.Text)
+            foreach (HtmlNode node in results.OutputNodes)
             {
-                newNode = nodeContext.TargetDocument.CreateTextNode(ReplaceFields(nodeContext));
+                if (node.NodeType == HtmlNodeType.Text)
+                {
+                    node.InnerHtml = ReplaceFields(node, nodeContext);
+                }
             }
-
-            return new ProcessResults() { OutputNodes = new HtmlNode[] { newNode }};
         }
 
         #endregion
 
         #region Private methods
 
-        private string ReplaceFields(NodeContext nodeContext)
+        private string ReplaceFields(HtmlNode node, NodeContext nodeContext)
         {
-            var input = nodeContext.CurrentNode.InnerText;
+            var input = node.InnerText;
             var matches = Regex.Matches(input, REGEX_PATTERN);
 
             foreach (Match match in matches)
@@ -49,7 +48,7 @@ namespace AngularCSharp.Processors
                 }
             }
 
-            return input;
+            return input.Replace("<", "&lt;").Replace(">", "&gt;");
         }
 
         #endregion

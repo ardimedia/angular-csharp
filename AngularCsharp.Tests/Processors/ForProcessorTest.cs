@@ -23,9 +23,11 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"\">Invalid Syntax</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = sut.ProcessNode(nodeContext);
+            sut.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
@@ -41,9 +43,11 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"#person in persons\">Invalid Syntax</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = sut.ProcessNode(nodeContext);
+            sut.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
@@ -61,13 +65,15 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p>Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
-            Assert.IsNull(results.OutputNodes);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
             Assert.IsFalse(results.StopProcessing);
         }
@@ -91,16 +97,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             templateEngineMock.Setup(mock => mock.ProcessNode(It.IsAny<NodeContext>(), It.IsAny<HtmlNode>()));
 
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, valueFinderMock.Object, templateEngineMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(0, results.OutputNodes.Length);
+            Assert.AreEqual(0, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
 
         [TestMethod()]
@@ -121,16 +128,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             valueFinderMock.Setup(mock => mock.GetString("number", It.IsAny<IDictionary<string, object>>())).Returns(() => customers[index].number.ToString()).Callback(() => index++);
 
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, valueFinderMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(2, results.OutputNodes.Length);
+            Assert.AreEqual(2, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
 
             Assert.AreEqual("<p>Hallo #" + customers[0].number + "</p>", results.OutputNodes[0].OuterHtml);
             Assert.AreEqual("<p>Hallo #" + customers[1].number + "</p>", results.OutputNodes[1].OuterHtml);
@@ -151,9 +159,11 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
             string expected = "<p>Jim</p><p>Blue</p>";
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = sut.ProcessNode(nodeContext);
+            sut.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);

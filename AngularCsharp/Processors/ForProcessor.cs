@@ -10,42 +10,51 @@ namespace AngularCSharp.Processors
 {
     public class ForProcessor : IProcessor
     {
+        #region Private constants
+
         private const string ATTRIBUTE_NAME = "*ngFor";
 
         private const string ATTRIBUTE_PATTERN = @"#(\w+)\s+of\s+(\w+)";
 
-        public ProcessResults ProcessNode(NodeContext nodeContext)
+        #endregion
+
+        #region IProcessor methods
+
+        public void ProcessNode(NodeContext nodeContext, ProcessResults results)
         {
-            var results = new ProcessResults();
             HtmlAttributeCollection attributes = nodeContext.CurrentNode.Attributes;
 
-            if (attributes.Contains(ATTRIBUTE_NAME))
+            foreach (HtmlNode htmlNode in results.OutputNodes)
             {
-                results = ProcessFor(nodeContext, attributes[ATTRIBUTE_NAME], results);
+                if (attributes.Contains(ATTRIBUTE_NAME))
+                {
+                    ProcessFor(htmlNode, nodeContext, attributes[ATTRIBUTE_NAME], results);
+                }
             }
-
-            return results;
         }
 
-        private ProcessResults ProcessFor(NodeContext nodeContext, HtmlAttribute htmlAttribute, ProcessResults results)
+        #endregion
+
+        #region Private methods
+
+        private void ProcessFor(HtmlNode htmlNode, NodeContext nodeContext, HtmlAttribute htmlAttribute, ProcessResults results)
         {
             Match match = Regex.Match(htmlAttribute.Value, ATTRIBUTE_PATTERN);
             if (!match.Success)
             {
-                return results;
+                nodeContext.Dependencies.Logger.AddWarning($"Invalid ngFor value { htmlAttribute.Value }");
+                return;
             }
 
-            List<HtmlNode> nodes = new List<HtmlNode>();
+            List<HtmlNode> outputNodes = new List<HtmlNode>();
             IEnumerable list = this.GetList(nodeContext, match.Groups[2].Value, nodeContext.CurrentVariables);
             foreach (object item in list)
             {
-                nodes.Add(ProcessItem(nodeContext, match.Groups[1].Value, item));
+                outputNodes.Add(ProcessItem(nodeContext, match.Groups[1].Value, item));
             }
 
-            results.OutputNodes = nodes.ToArray();
+            results.OutputNodes = outputNodes;
             results.SkipChildNodes = true;
-            results.StopProcessing = true;
-            return results;
         }
 
         private IEnumerable GetList(NodeContext nodeContext, string variableName, IDictionary<string,object> variables)
@@ -76,5 +85,7 @@ namespace AngularCSharp.Processors
 
             return nodeOutput;
         }
+
+        #endregion
     }
 }

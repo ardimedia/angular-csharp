@@ -18,15 +18,16 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p>Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
-            Assert.IsNull(results.OutputNodes);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
-            Assert.IsFalse(results.StopProcessing);
         }
 
         [TestMethod()]
@@ -40,16 +41,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             Dictionary<string, object> variables = new Dictionary<string, object>() { { "customer", new { number = "2000" } } };
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(true);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(1, results.OutputNodes.Length);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
 
         [TestMethod()]
@@ -63,16 +65,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             Dictionary<string, object> variables = new Dictionary<string, object>();
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(false);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(0, results.OutputNodes.Length);
+            Assert.AreEqual(0, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
 
         private HtmlDocument GetHtmlDocument(string html)

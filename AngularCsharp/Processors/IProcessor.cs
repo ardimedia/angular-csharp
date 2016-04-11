@@ -4,6 +4,6 @@ namespace AngularCSharp.Processors
 {
     public interface IProcessor
     {
-        ProcessResults ProcessNode(NodeContext nodeContext);
+        void ProcessNode(NodeContext nodeContext, ProcessResults results);
     }
 }

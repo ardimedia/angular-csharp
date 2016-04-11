@@ -1,4 +1,5 @@
 ﻿using HtmlAgilityPack;
+using System.Collections.Generic;
 
 namespace AngularCSharp.Processors
 {
@@ -6,7 +7,7 @@ namespace AngularCSharp.Processors
     {
         #region Properties
 
-        public HtmlNode[] OutputNodes;
+        public List<HtmlNode> OutputNodes = new List<HtmlNode>();
 
         public bool SkipChildNodes { get; set; }
 
