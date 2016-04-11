@@ -2,10 +2,12 @@
 
 namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 {
-    [TestClass()]
+    [TestClass]
     public class DependenciesTest
     {
-        [TestMethod()]
+        #region ValueObjects_Dependencies_Constructor
+
+        [TestMethod]
         public void ValueObjects_Dependencies_Constructor_Defaults()
         {
             // Act
@@ -16,5 +18,7 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
             Assert.IsNotNull(sut.Logger);
             Assert.IsNotNull(sut.ValueFinder);
         }
+
+        #endregion
     }
 }

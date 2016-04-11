@@ -9,27 +9,35 @@ namespace AngularCSharp.Tests.Helpers
     [TestClass]
     public class ExpressionResolverTest
     {
+        #region Helpers_ExpressionResolver_Constructor
+
         [TestMethod]
         public void Helpers_ExpressionResolver_Constructor()
         {
             // Assign
-            var valueFinderMock = new Mock<ValueFinder>();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
+            Logger logger = new Logger();
 
             // Act
-            var sut = new ExpressionResolver(valueFinderMock.Object);
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
 
             // Assert
             Assert.IsNotNull(sut);
         }
 
+        #endregion
+
+        #region Helpers_ExpressionResolver_IsTrue
+
         [TestMethod]
         public void Helpers_ExpressionResolver_IsTrue_True()
         {
             // Assign
-            var variables = GetVariables();
-            var valueFinderMock = new Mock<ValueFinder>();
+            Dictionary<string,object> variables = GetVariables();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
             valueFinderMock.Setup(mock => mock.GetObject("customerName", variables)).Returns(variables["customerName"]);
-            var sut = new ExpressionResolver(valueFinderMock.Object);
+            Logger logger = new Logger();
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
 
             // Act
             var result = sut.IsTrue("customerName", variables);
@@ -39,29 +47,49 @@ namespace AngularCSharp.Tests.Helpers
         }
 
         [TestMethod]
-        public void Helpers_ExpressionResolver_IsTrue_ValueNotExist()
+        public void Helpers_ExpressionResolver_IsTrue_False()
         {
             // Assign
-            var variables = GetVariables();
-            var valueFinderMock = new Mock<ValueFinder>();
-            valueFinderMock.Setup(mock => mock.GetObject("order", variables)).Throws(new ValueNotFoundException());
-            var sut = new ExpressionResolver(valueFinderMock.Object);
+            Dictionary<string, object> variables = GetVariables();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
+            valueFinderMock.Setup(mock => mock.GetObject("hasOrders", variables)).Returns(false);
+            Logger logger = new Logger();
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
 
             // Act
-            var result = sut.IsTrue("order", variables);
+            var result = sut.IsTrue("hasOrders", variables);
 
             // Assert
             Assert.IsFalse(result);
         }
 
         [TestMethod]
+        public void Helpers_ExpressionResolver_IsTrue_ValueNotExist()
+        {
+            // Assign
+            Dictionary<string,object> variables = GetVariables();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
+            valueFinderMock.Setup(mock => mock.GetObject("order", variables)).Throws(new ValueNotFoundException());
+            Logger logger = new Logger();
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
+
+            // Act
+            var result = sut.IsTrue("order", variables);
+
+            // Assert
+            Assert.IsFalse(result);
+            Assert.AreEqual(1, logger.Warnings.Length);
+        }
+
+        [TestMethod]
         public void Helpers_ExpressionResolver_IsTrue_Not()
         {
             // Assign
-            var variables = GetVariables();
-            var valueFinderMock = new Mock<ValueFinder>();
+            Dictionary<string, object> variables = GetVariables();
+            Mock<ValueFinder> valueFinderMock = new Mock<ValueFinder>();
             valueFinderMock.Setup(mock => mock.GetObject("customerName", variables)).Returns(variables["customerName"]);
-            var sut = new ExpressionResolver(valueFinderMock.Object);
+            Logger logger = new Logger();
+            var sut = new ExpressionResolver(valueFinderMock.Object, logger);
 
             // Act
             var result = sut.IsTrue("!customerName", variables);
@@ -70,21 +98,9 @@ namespace AngularCSharp.Tests.Helpers
             Assert.IsFalse(result);
         }
 
-        [TestMethod]
-        public void Helpers_ExpressionResolver_IsFalse()
-        {
-            // Assign
-            var variables = GetVariables();
-            var valueFinderMock = new Mock<ValueFinder>();
-            valueFinderMock.Setup(mock => mock.GetObject("hasOrders", variables)).Returns(false);
-            var sut = new ExpressionResolver(valueFinderMock.Object);
+        #endregion
 
-            // Act
-            var result = sut.IsTrue("hasOrders", variables);
-
-            // Assert
-            Assert.IsFalse(result);
-        }
+        #region Helpers_ExpressionResolver_Variables
 
         private Dictionary<string, object> GetVariables()
         {
@@ -95,5 +111,7 @@ namespace AngularCSharp.Tests.Helpers
                 { "hasOrders", false }
             };
         }
+
+        #endregion
     }
 }

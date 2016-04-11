@@ -70,6 +70,7 @@
     <Compile Include="Processors\ExpressionsProcessorTest.cs" />
     <Compile Include="Processors\ForProcessorTest.cs" />
     <Compile Include="Processors\IfProcessorTest.cs" />
+    <Compile Include="Processors\TemplateProcessorTest.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="AngularServiceTest.cs" />
     <Compile Include="ValueObjects\DependenciesTest.cs" />

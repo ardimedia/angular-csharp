@@ -10,28 +10,41 @@ namespace AngularCSharp.ValueObjects
     {
         #region Properties
 
+        /// <summary>
+        /// Contains all available variables in current context
+        /// </summary>
         public ReadOnlyDictionary<string, object> CurrentVariables { get; private set; }
 
+        /// <summary>
+        /// Current node in original DOM tree
+        /// </summary>
         public HtmlNode CurrentNode { get; private set; }
 
         /// <summary>
-        /// TODO brauchts das?
+        /// Contains all dependencies
         /// </summary>
-        public HtmlDocument TargetDocument { get; private set; }
-
         public Dependencies Dependencies { get; private set; }
 
+        /// <summary>
+        /// Access to TemplateEngine instance (caller of processes)
+        /// </summary>
         public TemplateEngine TemplateEngine { get; private set; }
 
         #endregion
 
         #region Constructor
 
-        public NodeContext(Dictionary<string,object> variables, HtmlNode node, HtmlDocument targetDocument, Dependencies dependencies, TemplateEngine templateEngine)
+        /// <summary>
+        /// Constructor (instanicates intial context)
+        /// </summary>
+        /// <param name="variables">Current variables</param>
+        /// <param name="node">Current node</param>
+        /// <param name="dependencies">All dependencies</param>
+        /// <param name="templateEngine">Instance of TemplateEngine</param>
+        public NodeContext(Dictionary<string,object> variables, HtmlNode node, Dependencies dependencies, TemplateEngine templateEngine)
         {
             this.CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
             this.CurrentNode = node;
-            this.TargetDocument = targetDocument;
             this.Dependencies = dependencies;
             this.TemplateEngine = templateEngine;
         }
@@ -40,6 +53,11 @@ namespace AngularCSharp.ValueObjects
 
         #region Public methods
 
+        /// <summary>
+        /// Returns a new instance with the change node. The context of this instance will stay unchanged.
+        /// </summary>
+        /// <param name="node"></param>
+        /// <returns></returns>
         public NodeContext ChangeContext(HtmlNode node)
         {
             var additionalVariables = new Dictionary<string, object>();
@@ -70,7 +88,7 @@ namespace AngularCSharp.ValueObjects
             }
 
             // Return new NodeContext instance
-            return new NodeContext(dictionary, node, this.TargetDocument, this.Dependencies, this.TemplateEngine);
+            return new NodeContext(dictionary, node, this.Dependencies, this.TemplateEngine);
         }
 
         #endregion

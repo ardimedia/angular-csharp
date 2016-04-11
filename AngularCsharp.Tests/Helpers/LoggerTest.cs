@@ -5,6 +5,8 @@ namespace AngularCSharp.Helpers.Tests.Helpers
     [TestClass]
     public class LoggerTests
     {
+        #region Helpers_Logger_Construct
+
         [TestMethod]
         public void Helpers_Logger_Construct()
         {
@@ -15,6 +17,10 @@ namespace AngularCSharp.Helpers.Tests.Helpers
             Assert.IsFalse(sut.HasWarnings);
             Assert.AreEqual(0, sut.Warnings.Length);
         }
+
+        #endregion
+
+        #region Helpers_Logger_AddWarning
 
         [TestMethod]
         public void Helpers_Logger_AddWarning()
@@ -31,5 +37,7 @@ namespace AngularCSharp.Helpers.Tests.Helpers
             Assert.AreEqual(message, sut.Warnings[0]);
             Assert.IsTrue(sut.HasWarnings);
         }
+
+        #endregion
     }
 }

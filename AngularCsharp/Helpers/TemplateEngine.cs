@@ -7,18 +7,30 @@ using HtmlAgilityPack;
 
 namespace AngularCSharp.Helpers
 {
+    /// <summary>
+    /// This is the core component of AngularCSharp. It iterates through all node, copy it and passes it to all specified processors.
+    /// </summary>
     public class TemplateEngine
     {
         #region Properties
 
+        /// <summary>
+        /// Contains all needed dependencies
+        /// </summary>
         public Dependencies Dependencies { get; private set; }
 
+        /// <summary>
+        /// Contains all needed classes for template processing
+        /// </summary>
         public IProcessor[] Processors { get; set; }
 
         #endregion
 
         #region Constructor
 
+        /// <summary>
+        /// Constructor (initialize default dependencies and processors)
+        /// </summary>
         public TemplateEngine()
         {
             this.Dependencies = new Dependencies();
@@ -29,15 +41,21 @@ namespace AngularCSharp.Helpers
 
         #region Public methods
 
+        /// <summary>
+        /// Processes the HTML document, replaces variables with specified model and returns processed HTML string
+        /// </summary>
+        /// <param name="htmlDocumentInput">DOM tree of HTML template</param>
+        /// <param name="model">Any object with properties</param>
+        /// <returns></returns>
         public string ProcessTemplate(HtmlDocument htmlDocumentInput, object model)
         {
             // Process template
-            var variables = GetGlobalVariables(model);
+            var variables = this.Dependencies.ValueFinder.GetAllProperties(model);
             var htmlDocumentOutput = new HtmlDocument();
 
             foreach (HtmlNode childNode in htmlDocumentInput.DocumentNode.ChildNodes)
             {
-                var context = new NodeContext(variables, childNode, htmlDocumentOutput, this.Dependencies, this);
+                var context = new NodeContext(variables, childNode, this.Dependencies, this);
                 ProcessNode(context, htmlDocumentOutput.DocumentNode);
             }
 
@@ -51,28 +69,34 @@ namespace AngularCSharp.Helpers
 
         #region Private methods
 
+        /// <summary>
+        /// Processing a single node (prepare ProcessResults instance, pass it to all processors, call the same method on child nodes)
+        /// </summary>
+        /// <param name="context"></param>
+        /// <param name="targetNode"></param>
         public virtual void ProcessNode(NodeContext context, HtmlNode targetNode)
         {
-            // Process current node
+            // Prepare ProcessResults instance
             var results = new ProcessResults();
+            results.OutputNodes.Add(context.CurrentNode.CloneNode(false));
+
+            // Iterate through all availabe processors
             foreach (IProcessor processor in GetDefaultProcessors())
             {
-                results = processor.ProcessNode(context);
+                // Call processor
+                processor.ProcessNode(context, results);
 
-                if (results.OutputNodes != null)
+                // Stop processing when necessary (processors can control this)
+                if (results.StopProcessing)
                 {
-                    // Don't call multiple processors, cancel as soon one processor returns nodes
                     break;
                 }
             }
 
-            // Append nodes to target node
-            if (results.OutputNodes != null)
+            // Append output nodes to target DOM
+            foreach (HtmlNode outputNode in results.OutputNodes)
             {
-                foreach (HtmlNode node in results.OutputNodes)
-                {
-                    targetNode.AppendChild(node);
-                }
+                targetNode.AppendChild(outputNode);
             }
 
             // Process childs
@@ -83,8 +107,11 @@ namespace AngularCSharp.Helpers
                     // Change context
                     var childContext = context.ChangeContext(childNode);
 
+                    // Find target node
+                    HtmlNode childTargetNode = targetNode.HasChildNodes ? targetNode.LastChild : targetNode;
+
                     // Process child node
-                    ProcessNode(childContext, targetNode.LastChild);
+                    ProcessNode(childContext, childTargetNode);
                 }
             }
         }
@@ -95,20 +122,9 @@ namespace AngularCSharp.Helpers
             {
                 new IfProcessor(),
                 new ForProcessor(),
-                new ExpressionsProcessor()
+                new ExpressionsProcessor(),
+                new TemplateProcessor()
             };
-        }
-
-        private Dictionary<string, object> GetGlobalVariables(object model)
-        {
-            // TODO: Move this function to ValueFinder class
-            var dict = new Dictionary<string, object>();
-            foreach (PropertyInfo propertyInfo in model.GetType().GetProperties())
-            {
-                dict.Add(propertyInfo.Name, propertyInfo.GetValue(model));
-            }
-
-            return dict;
         }
 
         #endregion

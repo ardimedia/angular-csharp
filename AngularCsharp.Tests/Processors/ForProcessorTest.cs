@@ -8,14 +8,12 @@ using Moq;
 
 namespace AngularCSharp.Processors.Tests.Processors
 {
-    [TestClass()]
+    [TestClass]
     public class ForProcessorTest
     {
         #region Processors_ForProcessor_Invalid_Syntax
 
-        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [Ignore]
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_Empty()
         {
             // Assign
@@ -23,17 +21,18 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"\">Invalid Syntax</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = sut.ProcessNode(nodeContext);
+            sut.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
+            Assert.AreEqual(1, nodeContext.Dependencies.Logger.Warnings.Length);
         }
 
-        // TODO: 2016-04-09/hp: How can we see, that *ngFor uses a invalid syntax
-        [Ignore]
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ForProcessor_Invalid_Syntax_in_InsteadOf_of()
         {
             // Assign
@@ -41,12 +40,15 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngFor=\"#person in persons\">Invalid Syntax</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = sut.ProcessNode(nodeContext);
+            sut.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
+            Assert.AreEqual(1, nodeContext.Dependencies.Logger.Warnings.Length);
         }
 
         #endregion
@@ -61,13 +63,15 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p>Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
-            Assert.IsNull(results.OutputNodes);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
             Assert.IsFalse(results.StopProcessing);
         }
@@ -91,16 +95,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             templateEngineMock.Setup(mock => mock.ProcessNode(It.IsAny<NodeContext>(), It.IsAny<HtmlNode>()));
 
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, valueFinderMock.Object, templateEngineMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(0, results.OutputNodes.Length);
+            Assert.AreEqual(0, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
 
         [TestMethod()]
@@ -121,16 +126,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             valueFinderMock.Setup(mock => mock.GetString("number", It.IsAny<IDictionary<string, object>>())).Returns(() => customers[index].number.ToString()).Callback(() => index++);
 
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, valueFinderMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(2, results.OutputNodes.Length);
+            Assert.AreEqual(2, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
 
             Assert.AreEqual("<p>Hallo #" + customers[0].number + "</p>", results.OutputNodes[0].OuterHtml);
             Assert.AreEqual("<p>Hallo #" + customers[1].number + "</p>", results.OutputNodes[1].OuterHtml);
@@ -166,7 +172,7 @@ namespace AngularCSharp.Processors.Tests.Processors
                 dependencies.ValueFinder = valueFinder;
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
+            return new NodeContext(variables, node, dependencies, new TemplateEngine());
         }
 
         #endregion

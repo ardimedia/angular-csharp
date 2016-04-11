@@ -30,7 +30,7 @@
             </tr>
         </thead>
         <tbody>
-            <template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -56,7 +56,7 @@
                     </td>
                 </tr>
                 <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -82,7 +82,7 @@
                     </td>
                 </tr>
                 <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -108,7 +108,7 @@
                     </td>
                 </tr>
                 <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -134,7 +134,7 @@
                     </td>
                 </tr>
                 <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -160,7 +160,7 @@
                     </td>
                 </tr>
                 <tr class="am-mailfix-height-1px"><td colspan="3" class="am-bg-color-blue am-mailfix-height-1px"></td></tr>
-            </template>
+            
         </tbody>
     </table>
     <br><br>
@@ -178,7 +178,7 @@
             </tr>
         </thead>
         <tbody>
-            <template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -210,7 +210,7 @@
                     </td>
                 </tr>
                 <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -242,7 +242,7 @@
                     </td>
                 </tr>
                 <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -274,7 +274,7 @@
                     </td>
                 </tr>
                 <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -306,7 +306,7 @@
                     </td>
                 </tr>
                 <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
-            </template><template>
+            
                 <tr>
                     <td>2016-0-0</td>
                     <td>Customer Name 0, Customer Address City 0</td>
@@ -338,7 +338,7 @@
                     </td>
                 </tr>
                 <tr><td colspan="3" class="am-bg-color-blue" style="Padding:1px 0 0 0"></td></tr>
-            </template>
+            
         </tbody>
     </table>
 </body>

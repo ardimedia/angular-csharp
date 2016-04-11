@@ -7,10 +7,12 @@ using Moq;
 
 namespace AngularCSharp.Processors.Tests.Processors
 {
-    [TestClass()]
+    [TestClass]
     public class IfProcessorTest
     {
-        [TestMethod()]
+        #region Processors_ExpressionProcessor_ProcessNode
+
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_Ignore()
         {
             // Assign
@@ -18,62 +20,69 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p>Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
-            Assert.IsNull(results.OutputNodes);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
-            Assert.IsFalse(results.StopProcessing);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_True()
         {
             // Assign
             IfProcessor toc = new IfProcessor();
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngif=\"customer\">Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
-            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object);
+            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object, new Logger());
             Dictionary<string, object> variables = new Dictionary<string, object>() { { "customer", new { number = "2000" } } };
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(true);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(1, results.OutputNodes.Length);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.IsFalse(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void Processors_ExpressionProcessor_ProcessNode_False()
         {
             // Assign
             IfProcessor toc = new IfProcessor();
             HtmlDocument htmlDocument = GetHtmlDocument("<p *ngif=\"customer\">Hallo</p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
-            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object);
+            Mock<ExpressionResolver> expressionResolverMock = new Mock<ExpressionResolver>(new Mock<ValueFinder>().Object, new Logger());
             Dictionary<string, object> variables = new Dictionary<string, object>();
             expressionResolverMock.Setup(mock => mock.IsTrue("customer", variables)).Returns(false);
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables, expressionResolverMock.Object);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
             Assert.IsNotNull(results.OutputNodes);
-            Assert.AreEqual(0, results.OutputNodes.Length);
+            Assert.AreEqual(0, results.OutputNodes.Count);
             Assert.IsTrue(results.SkipChildNodes);
-            Assert.IsTrue(results.StopProcessing);
         }
+
+        #endregion
+
+        #region Private methods
 
         private HtmlDocument GetHtmlDocument(string html)
         {
@@ -96,7 +105,9 @@ namespace AngularCSharp.Processors.Tests.Processors
                 dependencies.ExpressionResolver = expressionResolver;
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), dependencies, new TemplateEngine());
+            return new NodeContext(variables, node, dependencies, new TemplateEngine());
         }
+
+        #endregion
     }
 }

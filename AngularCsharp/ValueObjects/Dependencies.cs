@@ -6,7 +6,7 @@ namespace AngularCSharp.ValueObjects
     {
         #region Properties
 
-        public Logger Logger;
+        public Logger Logger { get; set; }
 
         public ValueFinder ValueFinder;
 
@@ -16,6 +16,9 @@ namespace AngularCSharp.ValueObjects
 
         #region Constructor
 
+        /// <summary>
+        /// Constructer, instanicates default dependencies
+        /// </summary>
         public Dependencies()
         {
             GetDefaults();
@@ -27,9 +30,9 @@ namespace AngularCSharp.ValueObjects
 
         public void GetDefaults()
         {
-            Logger = new Logger();
-            ValueFinder = new ValueFinder();
-            ExpressionResolver = new ExpressionResolver(ValueFinder);
+            this.Logger = new Logger();
+            this.ValueFinder = new ValueFinder();
+            this.ExpressionResolver = new ExpressionResolver(ValueFinder, this.Logger);
         }
 
         #endregion

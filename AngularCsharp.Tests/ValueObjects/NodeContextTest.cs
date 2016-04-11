@@ -5,10 +5,12 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 {
-    [TestClass()]
+    [TestClass]
     public class NodeContextTest
     {
-        [TestMethod()]
+        #region ValueObjects_NodeContext_Constructor
+
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor()
         {
             // Assign
@@ -19,24 +21,23 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
             TemplateEngine templateEngine = new TemplateEngine();
 
             // Act
-            var sut = new NodeContext(variables, node, targetDocument, dependencies, templateEngine);
+            var sut = new NodeContext(variables, node, dependencies, templateEngine);
 
             // Assert
             Assert.AreEqual(variables.Count, sut.CurrentVariables.Count, "Variables dictionary is not equal");
             Assert.AreEqual(variables["name"], sut.CurrentVariables["name"], "Variables dictionary is not equal");
             Assert.AreSame(node, sut.CurrentNode, "CurrentNode is wrong");
-            Assert.AreSame(targetDocument, sut.TargetDocument, "TargetDocument is wrong");
             Assert.AreSame(dependencies, sut.Dependencies, "Dependencies is wrong");
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor_ChangeContext_Shorthand()
         {
             // Assign
             Dictionary<string, object> variables = new Dictionary<string, object>();
             HtmlNode node = (new HtmlDocument()).CreateElement("div");
             HtmlNode newNode = (new HtmlDocument()).CreateElement("p");
-            NodeContext sut = new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
+            NodeContext sut = new NodeContext(variables, node, new Dependencies(), new TemplateEngine());
 
             // Act
             var changedSut = sut.ChangeContext(newNode);
@@ -47,14 +48,14 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
             Assert.AreNotSame(sut, changedSut);
         }
 
-        [TestMethod()]
+        [TestMethod]
         public void ValueObjects_NodeContext_Constructor_ChangeContext_AdditionalVariables()
         {
             // Assign
             var variables = new Dictionary<string, object>() { { "name", "test" }, { "old", "hello" } };
             var node = (new HtmlDocument()).CreateElement("div");
             var newNode = (new HtmlDocument()).CreateElement("p");
-            var sut = new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
+            var sut = new NodeContext(variables, node, new Dependencies(), new TemplateEngine());
             var additionalVariables = new Dictionary<string, object>() { { "name", "value" }, { "new", "test" } };
 
             // Act
@@ -72,5 +73,7 @@ namespace AngularCSharp.ValueObjects.Tests.ValueObjects
 
             Assert.AreNotSame(sut, changedSut, "new instance must not be the same as old instance");
         }
+
+        #endregion
     }
 }

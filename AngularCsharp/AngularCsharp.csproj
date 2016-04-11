@@ -21,7 +21,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <RunCodeAnalysis>false</RunCodeAnalysis>
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>BasicDesignGuidelineRules.ruleset</CodeAnalysisRuleSet>
     <PlatformTarget>AnyCPU</PlatformTarget>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
@@ -47,7 +47,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AngularCsharpService.cs" />
     <Compile Include="AngularService.cs" />
     <Compile Include="Exceptions\ValueNotFoundException.cs" />
     <Compile Include="Helpers\ExpressionResolver.cs" />
@@ -55,11 +54,11 @@
     <Compile Include="Processors\ExpressionsProcessor.cs" />
     <Compile Include="Processors\ForProcessor.cs" />
     <Compile Include="Processors\IfProcessor.cs" />
+    <Compile Include="Processors\TemplateProcessor.cs" />
     <Compile Include="ValueObjects\Dependencies.cs" />
     <Compile Include="ValueObjects\NodeContext.cs" />
     <Compile Include="Processors\IProcessor.cs" />
     <Compile Include="Processors\ProcessResults.cs" />
-    <Compile Include="Processors\SimpleCopyProcessor.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Helpers\TemplateEngine.cs" />
     <Compile Include="Helpers\ValueFinder.cs" />

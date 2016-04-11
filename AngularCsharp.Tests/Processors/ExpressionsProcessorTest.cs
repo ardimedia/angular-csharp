@@ -9,6 +9,8 @@ namespace AngularCSharp.Processors.Tests.Processors
     [TestClass()]
     public class ExpressionsProcessorTest
     {
+        #region Processors_ExpressionProcessor_ProcessNode
+
         [TestMethod()]
         public void Processors_ExpressionProcessor_ProcessNode_ElementNode()
         {
@@ -17,15 +19,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("<p>");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
 
             // Assert results.OutputNodes
-            Assert.AreEqual(1, results.OutputNodes.Length);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.AreEqual(htmlNode.InnerText, results.OutputNodes[0].InnerText);
 
             // Assert other results properties
@@ -41,15 +45,17 @@ namespace AngularCSharp.Processors.Tests.Processors
             HtmlDocument htmlDocument = GetHtmlDocument("Hello World!");
             HtmlNode htmlNode = htmlDocument.DocumentNode.FirstChild;
             NodeContext nodeContext = GetNodeContextInstance(htmlNode);
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
 
             // Assert results.OutputNodes
-            Assert.AreEqual(1, results.OutputNodes.Length);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.AreEqual(htmlNode.InnerText, results.OutputNodes[0].InnerText);
 
             // Assert other results properties
@@ -67,21 +73,27 @@ namespace AngularCSharp.Processors.Tests.Processors
             Dictionary<string, object> variables = new Dictionary<string, object>() { { "firstName", "Max" }, { "lastName", "Mustermann" } };
             NodeContext nodeContext = GetNodeContextInstance(htmlNode, variables);
             string expected = "Hello Max Mustermann!";
+            ProcessResults results = new ProcessResults();
+            results.OutputNodes.Add(htmlNode.CloneNode(false));
 
             // Act
-            ProcessResults results = toc.ProcessNode(nodeContext);
+            toc.ProcessNode(nodeContext, results);
 
             // Assert results
             Assert.IsNotNull(results);
 
             // Assert results.OutputNodes
-            Assert.AreEqual(1, results.OutputNodes.Length);
+            Assert.AreEqual(1, results.OutputNodes.Count);
             Assert.AreEqual(expected, results.OutputNodes[0].InnerText);
 
             // Assert other results properties
             Assert.IsFalse(results.SkipChildNodes);
             Assert.IsFalse(results.StopProcessing);
         }
+
+        #endregion
+
+        #region Private methods
 
         private HtmlDocument GetHtmlDocument(string html)
         {
@@ -97,7 +109,9 @@ namespace AngularCSharp.Processors.Tests.Processors
                 variables = new Dictionary<string, object>();
             }
 
-            return new NodeContext(variables, node, new HtmlDocument(), new Dependencies(), new TemplateEngine());
+            return new NodeContext(variables, node, new Dependencies(), new TemplateEngine());
         }
+
+        #endregion
     }
 }

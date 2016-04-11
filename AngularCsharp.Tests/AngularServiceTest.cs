@@ -375,6 +375,44 @@ namespace AngularCSharp.Tests
 
         #endregion
 
+        #region AngularService_Render_TemplateProcessor
+
+        [TestMethod]
+        public void AngularService_Render_TemplateProcessor_WithFor_Process()
+        {
+            // Assign
+            string template = "<template *ngFor=\"#person of persons\"><p>{{person.firstName}} {{person.lastName}}</p></template>";
+            var model = new { persons = new[] { new { firstName = "Max", lastName = "Mustermann" } } };
+            string expected = "<p>Max Mustermann</p>";
+            AngularService sut = new AngularService(template);
+
+            // Act
+            string result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        [TestMethod]
+        public void AngularService_Render_TemplateProcessor_WithFor_Ignore()
+        {
+            // Assign
+            string template = "<template><p *ngFor=\"#person of persons\">{{person.firstName}} {{person.lastName}}</p></template>";
+            var model = new { persons = new[] { new { firstName = "Max", lastName = "Mustermann" } } };
+            string expected = "<template><p>Max Mustermann</p></template>";
+            AngularService sut = new AngularService(template);
+
+            // Act
+            string result = sut.Render(model);
+
+            // Assert
+            Assert.AreEqual(expected, result);
+            Assert.IsFalse(sut.Logger.HasWarnings);
+        }
+
+        #endregion
+
         #region AngularService_Render_Integration_Tests
 
         [TestMethod]
@@ -428,11 +466,11 @@ namespace AngularCSharp.Tests
             // Assert
             #region Assert result (file content)
 
-            string[] resultLines = result.Split(Environment.NewLine.ToCharArray());
-            string[] expectedLines = expected.Split(Environment.NewLine.ToCharArray());
+            string[] resultLines = result.Split(new String[] { Environment.NewLine }, StringSplitOptions.None);
+            string[] expectedLines = expected.Split(new String[] { Environment.NewLine }, StringSplitOptions.None);
             for (int i = 0; i < resultLines.Count(); i++)
             {
-                Assert.AreEqual<string>(expectedLines[i], resultLines[i]);
+                Assert.AreEqual<string>(expectedLines[i], resultLines[i], $"Error on line { i + 1 }");
             }
             Assert.AreEqual<int>(expectedLines.Count(), resultLines.Count(), "Line count must be the same.");
 
