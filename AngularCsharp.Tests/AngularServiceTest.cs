@@ -448,7 +448,7 @@ namespace AngularCSharp.Tests
         public void AngularService_Render_Integration_PrintApprovalOpenSalesRep()
         {
             // Assign
-            Thread.CurrentThread.CurrentCulture = new CultureInfo("de-LI"); // Make sure date time are correctly formated
+            Thread.CurrentThread.CurrentCulture = new CultureInfo("de-LI"); // Make sure date time are correctly formated (also on build server)
 
             string template = System.IO.File.ReadAllText(@"!TestData\printApprovalOpenSalesRep.html");
             var salesAgent = new { FullName = "Jim Blue" };
