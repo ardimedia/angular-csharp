@@ -9,14 +9,6 @@ namespace AngularCSharp.Helpers
     /// </summary>
     public class ExpressionResolver
     {
-        #region Fields
-
-        private ValueFinder valueFinder { get; set; }
-
-        private Logger logger { get; set; }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -29,6 +21,14 @@ namespace AngularCSharp.Helpers
             this.valueFinder = valueFinder;
             this.logger = logger;
         }
+
+        #endregion
+
+        #region Private properties
+
+        private ValueFinder valueFinder { get; set; }
+
+        private Logger logger { get; set; }
 
         #endregion
 

@@ -8,6 +8,25 @@ namespace AngularCSharp.ValueObjects
 {
     public class NodeContext
     {
+        #region Constructor
+
+        /// <summary>
+        /// Constructor (instanicates intial context)
+        /// </summary>
+        /// <param name="variables">Current variables</param>
+        /// <param name="node">Current node</param>
+        /// <param name="dependencies">All dependencies</param>
+        /// <param name="templateEngine">Instance of TemplateEngine</param>
+        public NodeContext(Dictionary<string, object> variables, HtmlNode node, Dependencies dependencies, TemplateEngine templateEngine)
+        {
+            this.CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
+            this.CurrentNode = node;
+            this.Dependencies = dependencies;
+            this.TemplateEngine = templateEngine;
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
@@ -29,25 +48,6 @@ namespace AngularCSharp.ValueObjects
         /// Access to TemplateEngine instance (caller of processes)
         /// </summary>
         public TemplateEngine TemplateEngine { get; private set; }
-
-        #endregion
-
-        #region Constructor
-
-        /// <summary>
-        /// Constructor (instanicates intial context)
-        /// </summary>
-        /// <param name="variables">Current variables</param>
-        /// <param name="node">Current node</param>
-        /// <param name="dependencies">All dependencies</param>
-        /// <param name="templateEngine">Instance of TemplateEngine</param>
-        public NodeContext(Dictionary<string,object> variables, HtmlNode node, Dependencies dependencies, TemplateEngine templateEngine)
-        {
-            this.CurrentVariables = new ReadOnlyDictionary<string, object>(variables);
-            this.CurrentNode = node;
-            this.Dependencies = dependencies;
-            this.TemplateEngine = templateEngine;
-        }
 
         #endregion
 

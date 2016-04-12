@@ -4,16 +4,6 @@ namespace AngularCSharp.ValueObjects
 {
     public class Dependencies
     {
-        #region Properties
-
-        public Logger Logger { get; set; }
-
-        public ValueFinder ValueFinder { get; set; }
-
-        public ExpressionResolver ExpressionResolver { get; set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -23,6 +13,16 @@ namespace AngularCSharp.ValueObjects
         {
             GetDefaults();
         }
+
+        #endregion
+
+        #region Public properties
+
+        public Logger Logger { get; set; }
+
+        public ValueFinder ValueFinder { get; set; }
+
+        public ExpressionResolver ExpressionResolver { get; set; }
 
         #endregion
 

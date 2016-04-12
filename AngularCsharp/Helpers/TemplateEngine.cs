@@ -12,20 +12,6 @@ namespace AngularCSharp.Helpers
     /// </summary>
     public class TemplateEngine
     {
-        #region Properties
-
-        /// <summary>
-        /// Contains all needed dependencies
-        /// </summary>
-        public Dependencies Dependencies { get; private set; }
-
-        /// <summary>
-        /// Contains all needed classes for template processing
-        /// </summary>
-        public IProcessor[] Processors { get; set; }
-
-        #endregion
-
         #region Constructor
 
         /// <summary>
@@ -36,6 +22,20 @@ namespace AngularCSharp.Helpers
             this.Dependencies = new Dependencies();
             this.Processors = GetDefaultProcessors();
         }
+
+        #endregion
+
+        #region Public properties
+
+        /// <summary>
+        /// Contains all needed dependencies
+        /// </summary>
+        public Dependencies Dependencies { get; private set; }
+
+        /// <summary>
+        /// Contains all needed classes for template processing
+        /// </summary>
+        public IProcessor[] Processors { get; set; }
 
         #endregion
 

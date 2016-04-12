@@ -17,7 +17,7 @@ namespace AngularCSharp.Processors
 
         #endregion
 
-        #region Properties
+        #region Public properties
 
         /// <summary>
         /// Output nodes, which are prepared from TemplateEngine and should be changed by processor classes

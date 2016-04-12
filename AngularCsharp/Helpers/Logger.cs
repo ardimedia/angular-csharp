@@ -13,9 +13,7 @@ namespace AngularCSharp.Helpers
 
         #endregion
 
-        #region Properties
-
-        private List<string> WarningsList { get; set; }
+        #region Public properties
 
         /// <summary>
         /// Returns all warnings
@@ -38,6 +36,12 @@ namespace AngularCSharp.Helpers
                 return this.WarningsList.Count > 0;
             }
         }
+
+        #endregion
+
+        #region Private properties
+
+        private List<string> WarningsList { get; set; }
 
         #endregion
 
