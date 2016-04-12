@@ -11,9 +11,9 @@ namespace AngularCSharp.Helpers
     {
         #region Fields
 
-        private ValueFinder valueFinder;
+        private ValueFinder valueFinder { get; set; }
 
-        private Logger logger;
+        private Logger logger { get; set; }
 
         #endregion
 

@@ -4,13 +4,18 @@ namespace AngularCSharp.Helpers
 {
     public class Logger
     {
-        #region Fields
+        #region Constructor
 
-        private List<string> warnings = new List<string>();
+        public Logger()
+        {
+            WarningsList = new List<string>();
+        }
 
         #endregion
 
         #region Properties
+
+        private List<string> WarningsList { get; set; }
 
         /// <summary>
         /// Returns all warnings
@@ -19,7 +24,7 @@ namespace AngularCSharp.Helpers
         {
             get
             {
-                return this.warnings.ToArray();
+                return this.WarningsList.ToArray();
             }
         }
 
@@ -30,7 +35,7 @@ namespace AngularCSharp.Helpers
         {
             get
             {
-                return this.warnings.Count > 0;
+                return this.WarningsList.Count > 0;
             }
         }
 
@@ -44,7 +49,7 @@ namespace AngularCSharp.Helpers
         /// <param name="warning"></param>
         public void AddWarning(string warning)
         {
-            this.warnings.Add(warning);
+            this.WarningsList.Add(warning);
         }
 
         #endregion

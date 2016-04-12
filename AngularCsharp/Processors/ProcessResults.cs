@@ -8,12 +8,21 @@ namespace AngularCSharp.Processors
     /// </summary>
     public class ProcessResults
     {
+        #region Constructor
+
+        public ProcessResults()
+        {
+            this.OutputNodes = new List<HtmlNode>();
+        }
+
+        #endregion
+
         #region Properties
 
         /// <summary>
         /// Output nodes, which are prepared from TemplateEngine and should be changed by processor classes
         /// </summary>
-        public List<HtmlNode> OutputNodes = new List<HtmlNode>();
+        public List<HtmlNode> OutputNodes { get; set; }
 
         /// <summary>
         /// Specifies, if processing of child nodes should be skipped after processing this node

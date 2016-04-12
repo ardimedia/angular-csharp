@@ -9,24 +9,6 @@ namespace AngularCSharp
     /// </summary>
     public class AngularService
     {
-        #region Fields
-
-        private HtmlDocument htmlDocument;
-
-        private TemplateEngine templateEngine;
-
-        #endregion
-
-        #region Properties
-
-        // TODO: 2016-04-07/hp: Redesign, should probably provide a Logger to the templateEngine, not access it in this way.
-        public Logger Logger
-        {
-            get { return this.templateEngine.Dependencies.Logger; }
-        }
-
-        #endregion
-
         #region Constructors
 
         /// <summary>
@@ -36,12 +18,12 @@ namespace AngularCSharp
         public AngularService(string template)
         {
             // Initialize engine
-            this.templateEngine = new TemplateEngine();
+            this.TemplateEngine = new TemplateEngine();
 
             // Parse HTML
             var htmlDocument = new HtmlDocument();
             htmlDocument.LoadHtml(template);
-            this.htmlDocument = htmlDocument;
+            this.HtmlDocument = htmlDocument;
 
             // Handle parse errors
             if (htmlDocument.ParseErrors.Count() > 0)
@@ -55,6 +37,24 @@ namespace AngularCSharp
 
         #endregion
 
+        #region Public properties
+
+        // TODO: 2016-04-07/hp: Redesign, should probably provide a Logger to the templateEngine, not access it in this way.
+        public Logger Logger
+        {
+            get { return this.TemplateEngine.Dependencies.Logger; }
+        }
+
+        #endregion
+
+        #region Private properties
+
+        private HtmlDocument HtmlDocument { get; set; }
+
+        private TemplateEngine TemplateEngine { get; set; }
+
+        #endregion
+
         #region Public methods
 
         /// <summary>
@@ -64,7 +64,7 @@ namespace AngularCSharp
         /// <returns>Plain HTML string</returns>
         public string Render(object model)
         {
-            return this.templateEngine.ProcessTemplate(this.htmlDocument, model);
+            return this.TemplateEngine.ProcessTemplate(this.HtmlDocument, model);
         }
 
         #endregion

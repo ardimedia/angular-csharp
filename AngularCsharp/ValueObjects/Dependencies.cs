@@ -8,9 +8,9 @@ namespace AngularCSharp.ValueObjects
 
         public Logger Logger { get; set; }
 
-        public ValueFinder ValueFinder;
+        public ValueFinder ValueFinder { get; set; }
 
-        public ExpressionResolver ExpressionResolver;
+        public ExpressionResolver ExpressionResolver { get; set; }
 
         #endregion
 
