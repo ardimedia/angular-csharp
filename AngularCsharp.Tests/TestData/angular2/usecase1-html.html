@@ -1,0 +1,117 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width">
+    <title>Reminder Mail Dessertkarten: Offene Gut-zum-Druck Auftr�ge - �bersicht</title>
+
+</head>
+<body style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+    <div class="am-box-big">
+        <p>Hallo {{salesAgent.FullName}}</p>
+        <p>
+            Im folgenden erhalten Sie eine Liste aller Ihnen zugeordneten, offenen Gut-zum-Druck Dessertkarten-Auftr�ge.
+            <!--Rot markierte Auftr�ge sind seit mehr als 7 Tagen nicht bearbeitet.-->
+        </p>
+        <p style="padding-bottom: 0;">Ihr MyDessert Team</p>
+    </div>
+
+    <br><br>
+    <table style="border: 0 none; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 20px;" cellpadding="0" cellspacing="0" *ngIf="isCustomerPrintApproval" border="0" width="100%">
+        <thead class="am-bg-color-blue" style="background-color: #3598dc; color: white;">
+            <tr class="am-bg-color-blue" style="color: white; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;" bgcolor="#3598dc">
+                <td colspan="3" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">
+                    <div class="am-box-big">Offene Gut-zum-Druck Auftr�ge die von <b>Ihren Kunden</b> bearbeitet werden m�ssen</div>
+                </td>
+            </tr>
+            <tr class="am-bg-color-blue" style="color: white; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;" bgcolor="#3598dc">
+                <td width="200px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">Auftragsnummer</td>
+                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">Kunde (Name, Ort)</td>
+                <td width="180px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="right">Offen seit</td>
+            </tr>
+        </thead>
+        <tbody>
+            <template *ngFor="#printApproval of customerPrintApprovals">
+                <tr style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                    <td width="200px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">{{printApproval.WorkOrder.NestleOrderNo}}</td>
+                    <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>
+                    <td width="180px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="right">{{printApproval.RecordModifiedAt}}</td>
+                </tr>
+                <tr style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                    <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left"></td>
+                    <td colspan="2" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">
+                        <table style="border: 0 none; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 20px;" cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr *ngIf="printApproval.CustomerHintFromControllCenter" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <td width="200px" style="color: #3598dc; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-color-blue" valign="top" align="left">Kontrollstellenhinweis an Kunde</td>
+                                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" valign="top" align="left">
+                                    <pre style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; line-height: 16px; overflow-wrap: break-word; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; white-space: pre-wrap;">{{printApproval.CustomerHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.SalesRepHintFromControllCenter" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <td width="200px" style="color: #3598dc; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-color-blue" valign="top" align="left">Kontrollstellenhinweis an Sales Rep</td>
+                                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" valign="top" align="left">
+                                    <pre style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; line-height: 16px; overflow-wrap: break-word; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; white-space: pre-wrap;">{{printApproval.SalesRepHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="am-mailfix-height-1px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 1px; height: 1px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;"><td colspan="3" height="1px" style="color: white; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 1px; line-height: 1px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-bg-color-blue am-mailfix-height-1px" bgcolor="#3598dc" align="left">&nbsp;</td></tr>
+            </template>
+        </tbody>
+    </table>
+    <div *ngIf="isCustomerPrintApproval">
+        <br><br>
+    </div>
+
+    <table style="border: 0 none; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 20px;" cellpadding="0" cellspacing="0" *ngIf="isSalesRepPrintApproval" border="0" width="100%">
+        <thead class="am-bg-color-blue" style="background-color: #3598dc; color: white;">
+            <tr style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                <td colspan="3" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">
+                    <div class="am-box-big">Offene Gut-zum-Druck Auftr�ge die von <b>Ihnen</b> bearbeitet werden m�ssen</div>
+                </td>
+            </tr>
+            <tr class="am-bg-color-blue" style="color: white; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;" bgcolor="#3598dc">
+                <td width="200px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">Auftragsnummer</td>
+                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="left">Kunde (Name, Ort)</td>
+                <td width="180px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 15px; padding-left: 10px; padding-right: 10px; padding-top: 15px;" align="right">Offen seit</td>
+            </tr>
+        </thead>
+        <tbody>
+            <template *ngFor="#printApproval of salesRepPrintApprovals">
+                <tr style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                    <td width="200px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">{{printApproval.WorkOrder.NestleOrderNo}}</td>
+                    <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">{{printApproval.WorkOrder.CustomerName}}, {{printApproval.WorkOrder.CustomerAddressCity}}</td>
+                    <td width="180px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="right">{{printApproval.RecordModifiedAt}}</td>
+                </tr>
+                <tr style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                    <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left"></td>
+                    <td colspan="2" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 10px; padding-right: 10px; padding-top: 0;" align="left">
+                        <table style="border: 0 none; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 20px;" cellpadding="0" cellspacing="0" border="0" width="100%">
+                            <tr *ngIf="printApproval.CustomerComment" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <td width="200px" style="color: #3598dc; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-color-blue" valign="top" align="left">Kundenkommentar</td>
+                                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" valign="top" align="left">
+                                    <pre style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; line-height: 16px; overflow-wrap: break-word; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; white-space: pre-wrap;">{{printApproval.CustomerComment}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.CustomerHintFromControllCenter" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <td width="200px" style="color: #3598dc; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-color-blue" valign="top" align="left">Kontrollstellenhinweis an Kunde</td>
+                                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" valign="top" align="left">
+                                    <pre style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; line-height: 16px; overflow-wrap: break-word; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; white-space: pre-wrap;">{{printApproval.CustomerHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                            <tr *ngIf="printApproval.SalesRepHintFromControllCenter" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px;">
+                                <td width="200px" style="color: #3598dc; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-color-blue" valign="top" align="left">Kontrollstellenhinweis an Sales Rep</td>
+                                <td style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 13px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" valign="top" align="left">
+                                    <pre style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; line-height: 16px; overflow-wrap: break-word; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0; white-space: pre-wrap;">{{printApproval.SalesRepHintFromControllCenter}}</pre>
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+                <tr class="am-mailfix-height-1px" style="font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 1px; height: 1px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;"><td colspan="3" height="1px" style="color: white; font-family: 'Segoe UI', 'Segoe', 'SegoeUI-Regular-final', Tahoma, Geneva, Verdana, Helvetica, Arial, sans-serif; font-size: 1px; line-height: 1px; padding-bottom: 0; padding-left: 0; padding-right: 0; padding-top: 0;" class="am-bg-color-blue am-mailfix-height-1px" bgcolor="#3598dc" align="left">&nbsp;</td></tr>
+            </template>
+        </tbody>
+    </table>
+</body>
+</html>

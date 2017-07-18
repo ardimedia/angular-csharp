@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using AngularCsharp.Tests._TestData.Domain;
+using AngularCsharp.Tests.Properties;
+using AngularCsharp.Tests.TestData.Domain;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 namespace AngularCsharp.Tests
@@ -8,7 +9,7 @@ namespace AngularCsharp.Tests
     [TestClass]
     public class AngularCsharpServiceTest
     {
-        #region AngularCsharpService_Constructor_Template_Empty
+        #region Constructor_Template_Empty
 
         [TestMethod]
         public void AngularCsharpService_Constructor_Template_Empty()
@@ -24,7 +25,7 @@ namespace AngularCsharp.Tests
 
         #endregion
 
-        #region AngularCsharpService_Constructor_Template_String
+        #region Constructor_Template_String
 
         [TestMethod]
         public void AngularCsharpService_Constructor_Template_String()
@@ -41,7 +42,7 @@ namespace AngularCsharp.Tests
 
         #endregion
 
-        #region AngularCsharpService_Convert_NoInputs
+        #region Convert_NoInputs
 
         [TestMethod]
         public void AngularCsharpService_Convert_NoInputs()
@@ -52,7 +53,7 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { });
-            
+
             // Log
             Console.WriteLine(result);
 
@@ -70,7 +71,7 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { });
-            
+
             // Log
             Console.WriteLine(result);
 
@@ -81,7 +82,7 @@ namespace AngularCsharp.Tests
 
         #endregion
 
-        #region AngularCsharpService_Convert_Inputs
+        #region Convert_Inputs
 
         [TestMethod]
         public void AngularCsharpService_Convert_Inputs_TagProcessed()
@@ -94,7 +95,7 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { firstName });
-            
+
             // Log
             Console.WriteLine(result);
 
@@ -115,7 +116,7 @@ namespace AngularCsharp.Tests
 
             // Act
             string result = sut.Convert(new { firstName, lastName });
-            
+
             // Log
             Console.WriteLine(result);
 
@@ -138,13 +139,36 @@ namespace AngularCsharp.Tests
             // Act
             //string result = sut.Convert(new { person });
             string result = sut.Convert(new { person, resultShould, calls });
-            
+
             // Log
             Console.WriteLine(result);
 
             // Assert
             Assert.AreEqual<string>(resultShould, result);
             Assert.AreEqual<int>(0, sut.Warnings.Count);
+        }
+
+        #endregion
+
+        #region Convert_Inputs_UseCases
+
+        [TestMethod]
+        public void AngularCsharpService_Convert_Inputs_UseCase1()
+        {
+            // Assign
+            string template = Resources.usecase1_html;
+            object data = TestData.Domain.UseCase1.GetObjectFromJson();
+            AngularCsharpService sut = new AngularCsharpService(template);
+
+            // Act
+            string result = sut.Convert(data);
+
+            // Log
+            Console.WriteLine(result);
+
+            // Assert
+            //Assert.AreEqual<string>(resultShould, result);
+            //Assert.AreEqual<int>(0, sut.Warnings.Count);
         }
 
         #endregion

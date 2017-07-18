@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Runtime.Remoting;
+using HtmlAgilityPack;
 
 namespace AngularCsharp
 {
@@ -19,7 +20,9 @@ namespace AngularCsharp
 
         #endregion
 
-        #region Public Properties
+        #region Properties
+
+        private string result;
 
         public string Template { get; private set; }
 
@@ -33,12 +36,6 @@ namespace AngularCsharp
 
         #endregion
 
-        #region Private Properties
-
-        private string result;
-
-        #endregion
-
         #region Public Methods
 
         public string Convert<T>(T value) where T : class
@@ -47,14 +44,15 @@ namespace AngularCsharp
 
             PropertyInfo[] propertyInfos = value.GetType().GetProperties();
 
-            foreach (var propertyInfo in propertyInfos)
+            foreach (PropertyInfo propertyInfo in propertyInfos)
             {
                 ProcessProperty(propertyInfo.Name, "", propertyInfo.GetValue(value));
             }
 
-            this.ReplaceValues();
+            this.result = AngularCsharpOperation.ReplaceValues(this.result, this.Values);
+            this.result = this.ProcessNgFor();
 
-            VerifyIfAllHaveBeenProcessed();
+            this.Warnings.AddRange(AngularCsharpOperation.VerifyIfAllHaveBeenProcessed(this.result));
 
             return this.result;
         }
@@ -63,14 +61,7 @@ namespace AngularCsharp
 
         #region Private Methods
 
-        private void VerifyIfAllHaveBeenProcessed()
-        {
-            if (this.result.Contains("{{")
-                || this.result.Contains("}}"))
-            {
-                this.Warnings.Add("Not all ?tags? have been processed.");
-            }
-        }
+        int arrayCount = 0;
 
         private void ProcessProperty(string name, string parentName, object value)
         {
@@ -84,7 +75,9 @@ namespace AngularCsharp
             Type type = value.GetType();
 
             // work out how a simple dump of the value should be done
-            bool isString = value is string;
+            bool isString = type == typeof(string) ? true : false;
+            bool isArray = type.IsArray;
+
             string typeName = value.GetType().FullName;
             Exception exception = value as Exception;
 
@@ -99,6 +92,18 @@ namespace AngularCsharp
 
             if (isString)
             {
+                return;
+            }
+
+            if (isArray)
+            {
+                Array array = value as Array;
+                for (int i = 0; i < array.Length; i++)
+                {
+                    this.arrayCount = this.arrayCount + 1;
+                    string newParentNameArray = parentName + name + "." + this.arrayCount + ".";
+                    ProcessProperty(name, newParentNameArray, array.GetValue(i));
+                }
                 return;
             }
 
@@ -119,11 +124,13 @@ namespace AngularCsharp
                 return;
             }
 
+            // Get all properties for an object
             PropertyInfo[] properties = (from property in type.GetProperties(BindingFlags.Instance | BindingFlags.Public) // | BindingFlags.NonPublic
                                          where property.GetIndexParameters().Length == 0
                                                && property.CanRead
                                          select property).ToArray();
 
+            // Get all fields for an object
             FieldInfo[] fields = type.GetFields(BindingFlags.Instance | BindingFlags.Public).ToArray(); // | BindingFlags.NonPublic
 
             if (properties.Length == 0 && fields.Length == 0)
@@ -135,6 +142,11 @@ namespace AngularCsharp
             {
                 foreach (PropertyInfo pi in properties)
                 {
+                    if (pi.Name == "SyncRoot")
+                    {
+                        continue; // AnonymousType ?!?
+                    }
+
                     try
                     {
                         object propertyValue = pi.GetValue(value, null);
@@ -172,12 +184,70 @@ namespace AngularCsharp
             }
         }
 
-        private void ReplaceValues()
+        private string ProcessNgFor()
         {
-            foreach (var value in this.Values)
+            HtmlAgilityPack.HtmlNodeCollection htmlNodes = HtmlOperation.GetNodesNgFor(this.result);
+
+            if (htmlNodes == null)
             {
-                this.result = this.result.Replace("{{" + value.Key + "}}", value.Value);
+                // Nothing found to process
+                return this.result;
             }
+
+            foreach (HtmlNode htmlNode in htmlNodes)
+            {
+                string htmlNgFor = htmlNode.OuterHtml;
+                string collectionName = NgForOperation.GetParameterCollectionName(htmlNgFor);
+                string itemName = NgForOperation.GetParameterItemName(htmlNgFor);
+
+                Dictionary<string, string> valueRows = new Dictionary<string, string>();
+                bool isNewDataRowFound = false;
+
+                this.arrayCount = 0;
+                foreach (KeyValuePair<string, string> item in this.Values)
+                {
+                    if (!item.Key.StartsWith(collectionName, StringComparison.Ordinal))
+                    {
+                        continue;
+                    }
+
+                    if (item.Key == collectionName + "." + (this.arrayCount + 1) + "." + collectionName)
+                    {
+                        if (valueRows.Count != 0)
+                        {
+                            htmlNgFor = AngularCsharpOperation.ReplaceValues(htmlNgFor, valueRows);
+
+                            HtmlNode parentNode = htmlNode.ParentNode;
+                            HtmlNode newNode = HtmlNode.CreateNode(htmlNgFor);
+                            parentNode.AppendChild(newNode);
+
+                        }
+                        isNewDataRowFound = true;
+                        valueRows = new Dictionary<string, string>();
+                        this.arrayCount = this.arrayCount + 1;
+                    }
+
+                    if (isNewDataRowFound || this.arrayCount >= 1)
+                    {
+                        if (item.Key == collectionName + "." + this.arrayCount + "." + collectionName)
+                        {
+                            if (!isNewDataRowFound)
+                            {
+                                this.arrayCount = this.arrayCount + 1;
+                            }
+                            isNewDataRowFound = false;
+                            continue;
+                        }
+
+                        string newKey = item.Key.Replace(collectionName + "." + this.arrayCount + ".", "");
+                        newKey = newKey.Replace(collectionName, itemName);
+                        valueRows.Add(newKey, item.Value);
+                    }
+
+                }
+            }
+
+            return this.result;
         }
 
         #endregion
